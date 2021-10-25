@@ -38,9 +38,10 @@ public class GameView extends View {
     int minTubeOffset, maxTubeOffset;
     int numberOfTubes = 4;
     int distanceBetweenTubes;
-    int tubeX;
-    int topTubeY;
+    int[] tubeX = new int[numberOfTubes];
+    int[] topTubeY = new int[numberOfTubes];
     Random random;
+    int tubeVelocity = 8;
 
 
 
@@ -73,9 +74,15 @@ public class GameView extends View {
         minTubeOffset = gap/2;
         maxTubeOffset = dHeight - minTubeOffset - gap;
         random = new Random();
-        tubeX = dWidth/2 - toptube.getWidth()/2;
-        // Y axis of top tube would vary between maxTubeOffset and minTubeOffset
-        topTubeY = minTubeOffset + random.nextInt(maxTubeOffset - minTubeOffset + 1);
+
+        for (int i = 0; i<numberOfTubes; i++){
+            // to start off, tube should come from the right edge of the screen
+            tubeX[i] = dWidth + i*distanceBetweenTubes;
+            // Y axis of top tube would vary between maxTubeOffset and minTubeOffset
+            topTubeY[i] = minTubeOffset + random.nextInt(maxTubeOffset - minTubeOffset + 1);
+        }
+
+
 
     }
 
@@ -99,8 +106,15 @@ public class GameView extends View {
                 velocity += gravity;
                 birdY += velocity;
             }
-            canvas.drawBitmap(toptube, tubeX, topTubeY - toptube.getHeight(), null);
-            canvas.drawBitmap(bottomtube, tubeX, topTubeY+gap, null);
+            for (int i = 0; i < numberOfTubes; i++) {
+                tubeX[i] -= tubeVelocity;
+                if (tubeX[i] < -toptube.getWidth()){
+                    tubeX[i] += numberOfTubes * distanceBetweenTubes;
+                    topTubeY[i] = minTubeOffset + random.nextInt(maxTubeOffset - minTubeOffset + 1);
+                }
+                canvas.drawBitmap(toptube, tubeX[i], topTubeY[i] - toptube.getHeight(), null);
+                canvas.drawBitmap(bottomtube, tubeX[i], topTubeY[i] + gap, null);
+            }
         }
 
         // Display bird at the center of the screen
@@ -117,7 +131,6 @@ public class GameView extends View {
             // move bird upward by some unit
             velocity = -30; // move 30 units upward
             gameState = true;
-            topTubeY = minTubeOffset + random.nextInt(maxTubeOffset - minTubeOffset + 1);
         }
         return true; // By returning ture, it indicates that we have done with touch event and no further action needed
     }
