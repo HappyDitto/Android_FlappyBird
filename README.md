@@ -68,5 +68,6 @@ click on AVD manager -> Create new virtual device -> choose a version -> downloa
 
 go to project -> app -> src -> main -> res -> drawable
 
+#### Stucked when run APP and prompt “waiting for all target devices to come online”
 
-
+ Tools -> AVD manager -> more -> cold boot now
