@@ -39,9 +39,9 @@ public class MainActivity extends Activity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
 
-
+        //存数据
         myRef.setValue("数据库连接测试!!!");
-
+        //监听到数据库有变化取出来打印
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
