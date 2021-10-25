@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.content.Context;
@@ -20,21 +21,28 @@ public class GameView extends View {
     Handler handler; // Handler is required to schedule a runnable after some delay
     Runnable runnable;
     final int UPDATE_MILLIS = 30;
+
+    // maps
     Bitmap background;
+    Bitmap over_pic;
     Bitmap toptube, bottomtube;
+    Bitmap[] birds; // Bitmap array for the bird
+
+    // displays
     Display display;
     Point point;
     int dWidth, dHeight; // Device width and height respectively
     Rect rect;
-    // Bitmap array for the bird
-    Bitmap[] birds;
+
     // We need an integer variable to keep track of bird image/frame
     int birdFrame = 0;
     int velocity = 0, gravity = 3;
     // keep track of the bird position
     int birdX, birdY;
-    boolean gameState = false;
-    int gap = 400; // Gap between top tube and the bottom tube
+    boolean gameState = true;
+
+    // tubes
+    int gap = 600; // Gap between top tube and the bottom tube
     int minTubeOffset, maxTubeOffset;
     int numberOfTubes = 4;
     int distanceBetweenTubes;
@@ -43,6 +51,7 @@ public class GameView extends View {
     Random random;
     int tubeVelocity = 8;
 
+    int endX, endY;
 
 
     public GameView(Context context) {
@@ -54,9 +63,12 @@ public class GameView extends View {
                 invalidate(); // this will call onDraw
             }
         };
+
         background = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+        over_pic = BitmapFactory.decodeResource(getResources(), R.drawable.end);
         toptube = BitmapFactory.decodeResource(getResources(),R.drawable.toptube);
         bottomtube = BitmapFactory.decodeResource(getResources(), R.drawable.bottomtube);
+
         display = ((Activity)getContext()).getWindowManager().getDefaultDisplay();
         point = new Point();
         display.getSize(point);
@@ -70,6 +82,11 @@ public class GameView extends View {
         // With bird in center at the beginning
         birdX = dWidth/2 - birds[0].getWidth()/2;
         birdY = dHeight/2 - birds[0].getHeight()/2;
+
+        // game end picture
+        endX = dWidth/2 - over_pic.getWidth()/2;
+        endY = dHeight/2 - over_pic.getHeight()/2;
+
         distanceBetweenTubes = dWidth*3/4; // our assumption
         minTubeOffset = gap/2;
         maxTubeOffset = dHeight - minTubeOffset - gap;
@@ -89,14 +106,18 @@ public class GameView extends View {
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
         // we will draw our view inside onDraw()
+
         // draw the background on canvas
         //canvas.drawBitmap(background, 0, 0, null);
         canvas.drawBitmap(background,null, rect, null); // fixed
+
+        // bird can move its wings
         if(birdFrame == 0){
             birdFrame = 1;
         } else {
             birdFrame = 0;
         }
+
         if(gameState) {
 
             // keep the bird on the screen (doesn't go beyond boundary)
@@ -106,15 +127,47 @@ public class GameView extends View {
                 velocity += gravity;
                 birdY += velocity;
             }
+
+            if (birdY >= dHeight - birds[0].getHeight()){
+                gameState = false;
+            }
+
+
+
+
             for (int i = 0; i < numberOfTubes; i++) {
+
                 tubeX[i] -= tubeVelocity;
                 if (tubeX[i] < -toptube.getWidth()){
                     tubeX[i] += numberOfTubes * distanceBetweenTubes;
                     topTubeY[i] = minTubeOffset + random.nextInt(maxTubeOffset - minTubeOffset + 1);
                 }
+
+                int bottomtubeY = topTubeY[i] + gap;
+
                 canvas.drawBitmap(toptube, tubeX[i], topTubeY[i] - toptube.getHeight(), null);
-                canvas.drawBitmap(bottomtube, tubeX[i], topTubeY[i] + gap, null);
+                canvas.drawBitmap(bottomtube, tubeX[i], bottomtubeY, null);
+
+                // top tube bounce back conditions
+                if (birdY - birds[0].getHeight()/2 < topTubeY[i]  &&
+                        (tubeX[i] < birdX + birds[0].getWidth()/2) &&
+                (birdX + birds[0].getWidth()/2)< tubeX[i] + toptube.getWidth()){
+                    birdX = tubeX[i] - birds[0].getWidth();
+                }
+
+                // bottom tube bounce back conditions
+                if (birdY + birds[0].getHeight()/2 > bottomtubeY &&
+                        (tubeX[i] < birdX + birds[0].getWidth()/2) &&
+                        (birdX + birds[0].getWidth()/2)< tubeX[i] + toptube.getWidth()){
+                    birdX = tubeX[i] - birds[0].getWidth();
+                }
+
+
+
             }
+
+        }else{
+            canvas.drawBitmap(over_pic, endX, endY, null);
         }
 
         // Display bird at the center of the screen
@@ -128,9 +181,13 @@ public class GameView extends View {
     public boolean onTouchEvent(MotionEvent event) {
         int action = event.getAction();
         if (action == MotionEvent.ACTION_DOWN){ // that is tap is detected on screen
-            // move bird upward by some unit
-            velocity = -30; // move 30 units upward
-            gameState = true;
+
+            if (gameState = true) {
+                // move bird upward by some unit
+                velocity = -30; // move 30 units upward
+            } else {
+                gameState = true;
+            }
         }
         return true; // By returning ture, it indicates that we have done with touch event and no further action needed
     }
