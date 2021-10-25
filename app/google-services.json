@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "48493156802",
+    "project_id": "flappybird-757ab",
+    "storage_bucket": "flappybird-757ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:48493156802:android:ea58fd2af7468eb3adde5b",
+        "android_client_info": {
+          "package_name": "com.example.flappy_bird_basic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "48493156802-ss0k265j96hnr14nror6qu3lian0o4cg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBmHgMgzMgJ34IxkQxb5LOdcee9m6RSjo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "48493156802-ss0k265j96hnr14nror6qu3lian0o4cg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
