@@ -25,8 +25,27 @@
         android:text="Login First"
         android:onClick="accountLoginRegister" />
 
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="133dp"
+        android:text="TextView" />
 
-<!--    <ImageButton-->
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="181dp"
+        android:onClick="getSpeechInput"
+        android:src="@android:drawable/presence_audio_away" />
+
+
+    <!--    <ImageButton-->
 <!--        android:id="@+id/empty_account"-->
 <!--        android:layout_width="68dp"-->
 <!--        android:layout_height="66dp"-->

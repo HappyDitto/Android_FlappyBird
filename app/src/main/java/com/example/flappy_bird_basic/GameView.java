@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.speech.SpeechRecognizer;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -58,6 +59,7 @@ public class GameView extends View {
 
     int endX, endY;
 
+    SpeechRecognizer speechRecognizer;
 
     public GameView(Context context) {
         super(context);
