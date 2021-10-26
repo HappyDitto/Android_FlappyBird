@@ -33,7 +33,6 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         loginBtn=(Button) findViewById(R.id.login_btn);
         mAuth = FirebaseAuth.getInstance();
 
-
     }
 
     public void registerEntry(View view) {
