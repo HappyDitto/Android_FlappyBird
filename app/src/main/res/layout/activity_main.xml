@@ -23,18 +23,18 @@
         android:layout_height="wrap_content"
         android:layout_above="@id/startDirectlyBtn"
         android:text="Login First"
-        android:onClick="goLogin" />
+        android:onClick="accountLoginRegister" />
 
 
-    <ImageButton
-        android:id="@+id/empty_account"
-        android:layout_width="68dp"
-        android:layout_height="66dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="19dp"
-        android:onClick="accountLoginRegister"
-        tools:src="@tools:sample/avatars" />
+<!--    <ImageButton-->
+<!--        android:id="@+id/empty_account"-->
+<!--        android:layout_width="68dp"-->
+<!--        android:layout_height="66dp"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginStart="23dp"-->
+<!--        android:layout_marginTop="19dp"-->
+<!--        android:onClick="accountLoginRegister"-->
+<!--        tools:src="@tools:sample/avatars" />-->
 
 </RelativeLayout>

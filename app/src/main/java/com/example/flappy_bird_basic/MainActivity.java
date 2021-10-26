@@ -20,7 +20,6 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends Activity {
     private Button playDirectlyBtn;
     private Button loginBtn;
-    private ImageButton accountEntry;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +28,6 @@ public class MainActivity extends Activity {
         playDirectlyBtn = findViewById(R.id.startDirectlyBtn);
         loginBtn = findViewById(R.id.goLoginBtn);
 
-        //loginEntry
-        accountEntry= (ImageButton) findViewById(R.id.empty_account);
 
     }
 
@@ -38,11 +35,6 @@ public class MainActivity extends Activity {
         Intent intent = new Intent(this, StartGame.class);
         startActivity(intent);
     }
-
-    public void goLogin(View view){
-
-    }
-
 
     /***
      * Firebase Runtime Database Connection Testing
