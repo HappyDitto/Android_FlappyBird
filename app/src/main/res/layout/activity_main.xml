@@ -7,23 +7,34 @@
     tools:context=".MainActivity"
     android:background="@drawable/background">
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
+
+
+    <Button
+        android:id="@+id/startDirectlyBtn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/play"
-        android:onClick="startGame" />
+        android:text="Start Game"
+        android:onClick="goStart" />
 
-    <ImageButton
-        android:id="@+id/empty_account"
-        android:layout_width="68dp"
-        android:layout_height="66dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="23dp"
-        android:layout_marginTop="19dp"
-        android:onClick="accountLoginRegister"
-        tools:src="@tools:sample/avatars" />
+    <Button
+        android:id="@+id/goLoginBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/startDirectlyBtn"
+        android:text="Login First"
+        android:onClick="accountLoginRegister" />
+
+
+<!--    <ImageButton-->
+<!--        android:id="@+id/empty_account"-->
+<!--        android:layout_width="68dp"-->
+<!--        android:layout_height="66dp"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginStart="23dp"-->
+<!--        android:layout_marginTop="19dp"-->
+<!--        android:onClick="accountLoginRegister"-->
+<!--        tools:src="@tools:sample/avatars" />-->
 
 </RelativeLayout>
