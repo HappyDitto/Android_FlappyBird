@@ -1,5 +1,6 @@
 package com.example.flappy_bird_basic;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,6 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginRegisterHomeActivity extends AppCompatActivity {
@@ -40,18 +45,40 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
             registerOnDemand(email_input,password_input);
         }
         //register logic here
-        Toast.makeText(this,"Successfully Register",Toast.LENGTH_LONG);
-        startActivity(new Intent(this,OnlineGamingActivity.class));
-        finish();
+
+
     }
 
     private void registerOnDemand(String email_input, String password_input) {
+        mAuth.createUserWithEmailAndPassword(email_input,password_input).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Registered, You can now Login", Toast.LENGTH_SHORT).show();
+
+                }else {
+                    Toast.makeText(LoginRegisterHomeActivity.this, "Failed Registering", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 
     public void loginEntry(View view) {
         //login logic here
-        Toast.makeText(this,"Successfully login",Toast.LENGTH_LONG);
-        startActivity(new Intent(this,OnlineGamingActivity.class));
-        finish();
+        String email_input=emailField.getText().toString();
+        String password_input=passwordField.getText().toString();
+        loginOnDemand(email_input,password_input);
+    }
+
+    private void loginOnDemand(String email_input, String password_input) {
+        mAuth.signInWithEmailAndPassword(email_input,password_input).addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
+            @Override
+            public void onSuccess(AuthResult authResult) {
+                Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Logined", Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(LoginRegisterHomeActivity.this,OnlineGamingActivity.class));
+                finish();
+            }
+        });
     }
 }
