@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
+import android.widget.ImageButton;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 public class MainActivity extends Activity {
     private Button playDirectlyBtn;
     private Button loginBtn;
+    private ImageButton accountEntry;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +28,10 @@ public class MainActivity extends Activity {
 //        dataBaseInitTrying();
         playDirectlyBtn = findViewById(R.id.startDirectlyBtn);
         loginBtn = findViewById(R.id.goLoginBtn);
+
+        //loginEntry
+        accountEntry= (ImageButton) findViewById(R.id.empty_account);
+
     }
 
     public void goStart(View view){
@@ -63,5 +69,10 @@ public class MainActivity extends Activity {
             }
         });
 
+    }
+
+    public void accountLoginRegister(View view) {
+        Intent intentForLoginRegister= new Intent(this,LoginRegisterHomeActivity.class);
+        startActivity(intentForLoginRegister);
     }
 }
