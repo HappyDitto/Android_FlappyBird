@@ -7,12 +7,23 @@
     tools:context=".MainActivity"
     android:background="@drawable/background">
 
-    <ImageButton
-        android:id="@+id/imageButton"
-        android:layout_width="wrap_content"
+
+
+    <Button
+        android:id="@+id/startDirectlyBtn"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/play"
-        android:onClick="startGame" />
+        android:text="Start Game"
+        android:onClick="goStart" />
+
+    <Button
+        android:id="@+id/goLoginBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/startDirectlyBtn"
+        android:text="Login First"
+        android:onClick="goLogin" />
+
 
 </RelativeLayout>

@@ -3,10 +3,12 @@ package com.example.flappy_bird_basic;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.content.Intent;
+import android.widget.Button;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,20 +17,26 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends Activity {
-
+    private Button playDirectlyBtn;
+    private Button loginBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        dataBaseInitTrying();
-        Log.i("监听到变化:", "111111111111");
+//        dataBaseInitTrying();
+        playDirectlyBtn = findViewById(R.id.startDirectlyBtn);
+        loginBtn = findViewById(R.id.goLoginBtn);
     }
 
-    public void startGame(View view){
+    public void goStart(View view){
         Intent intent = new Intent(this, StartGame.class);
         startActivity(intent);
-        finish();
     }
+
+    public void goLogin(View view){
+
+    }
+
 
     /***
      * Firebase Runtime Database Connection Testing
