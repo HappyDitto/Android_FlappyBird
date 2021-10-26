@@ -3,6 +3,8 @@ package com.example.flappy_bird_basic;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -13,6 +15,7 @@ import android.os.Handler;
 import android.view.Display;
 import android.graphics.Point;
 
+import java.util.Date;
 import java.util.Random;
 
 public class GameView extends View {
@@ -21,6 +24,8 @@ public class GameView extends View {
     Handler handler; // Handler is required to schedule a runnable after some delay
     Runnable runnable;
     final int UPDATE_MILLIS = 30;
+
+    int score = 0;
 
     // maps
     Bitmap background;
@@ -42,7 +47,7 @@ public class GameView extends View {
     boolean gameState = true;
 
     // tubes
-    int gap = 600; // Gap between top tube and the bottom tube
+    int gap = 650; // Gap between top tube and the bottom tube
     int minTubeOffset, maxTubeOffset;
     int numberOfTubes = 4;
     int distanceBetweenTubes;
@@ -108,8 +113,7 @@ public class GameView extends View {
         // we will draw our view inside onDraw()
 
         // draw the background on canvas
-        //canvas.drawBitmap(background, 0, 0, null);
-        canvas.drawBitmap(background,null, rect, null); // fixed
+        canvas.drawBitmap(background,null, rect, null);
 
         // bird can move its wings
         if(birdFrame == 0){
@@ -130,10 +134,8 @@ public class GameView extends View {
 
             if (birdY >= dHeight - birds[0].getHeight()){
                 gameState = false;
+                score = 0;
             }
-
-
-
 
             for (int i = 0; i < numberOfTubes; i++) {
 
@@ -162,7 +164,11 @@ public class GameView extends View {
                     birdX = tubeX[i] - birds[0].getWidth();
                 }
 
-
+                // add score to the background
+                Paint paint = new Paint();
+                paint.setColor(Color.BLACK);
+                paint.setTextSize(60);
+                canvas.drawText("Score: " + String.valueOf(score),dWidth-300,50,paint);
 
             }
 
@@ -185,8 +191,7 @@ public class GameView extends View {
             if (gameState = true) {
                 // move bird upward by some unit
                 velocity = -30; // move 30 units upward
-            } else {
-                gameState = true;
+                score += 1;
             }
         }
         return true; // By returning ture, it indicates that we have done with touch event and no further action needed

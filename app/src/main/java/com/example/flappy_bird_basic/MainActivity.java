@@ -17,9 +17,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class MainActivity extends Activity {
     private Button playDirectlyBtn;
     private Button loginBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +31,6 @@ public class MainActivity extends Activity {
 //        dataBaseInitTrying();
         playDirectlyBtn = findViewById(R.id.startDirectlyBtn);
         loginBtn = findViewById(R.id.goLoginBtn);
-
 
     }
 
