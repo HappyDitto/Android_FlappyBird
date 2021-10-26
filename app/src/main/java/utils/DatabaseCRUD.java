@@ -1,5 +1,5 @@
 package utils;
 
-public class DatabaseCURD {
+public class DatabaseCRUD {
 
 }
