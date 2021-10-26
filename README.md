@@ -80,3 +80,14 @@ go to project -> app -> src -> main -> res -> drawable
 4. click on building number quickly 7 times
 5. go into developer mode
 6. run your device on Android studio
+
+#### Failure to download on real devices
+
+add this line of code to 
+
+> gradle.properties
+
+```javascript
+android.injected.testOnly=false
+```
+
