@@ -1,17 +1,3 @@
-### GitLab Structure
-
-> flappyBird_local - local version of flappy bird
->
-> flappyBird_online - flappy bird with online features
->
-> flappyBird_database - flappy bird with database features
->
-> flappyBird_pages - flappy bird with pages
->
-> flappyBird_sensor - flappy bird with multiple sensors
-
-
-
 ### Environment Info.
 
 #### Current runnable version for flappy bird:
