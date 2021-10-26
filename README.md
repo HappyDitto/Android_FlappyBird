@@ -1,17 +1,3 @@
-### GitLab Structure
-
-> flappyBird_local - local version of flappy bird
->
-> flappyBird_online - flappy bird with online features
->
-> flappyBird_database - flappy bird with database features
->
-> flappyBird_pages - flappy bird with pages
->
-> flappyBird_sensor - flappy bird with multiple sensors
-
-
-
 ### Environment Info.
 
 #### Current runnable version for flappy bird:
@@ -71,3 +57,23 @@ go to project -> app -> src -> main -> res -> drawable
 #### Stucked when run APP and prompt “waiting for all target devices to come online”
 
  Tools -> AVD manager -> more -> cold boot now
+
+#### How to debug in real devices
+
+1. connect your phone through USB drive
+2. Settings
+3. about this phone
+4. click on building number quickly 7 times
+5. go into developer mode
+6. run your device on Android studio
+
+#### Failure to download on real devices
+
+add this line of code to 
+
+> gradle.properties
+
+```javascript
+android.injected.testOnly=false
+```
+
