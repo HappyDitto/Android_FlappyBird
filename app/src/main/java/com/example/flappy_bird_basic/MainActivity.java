@@ -1,18 +1,18 @@
 package com.example.flappy_bird_basic;
 
+import static utils.Utils.*;
+
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.Activity;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.speech.RecognizerIntent;
-import android.widget.Toast;
+
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -20,11 +20,7 @@ import java.util.Locale;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class MainActivity extends Activity {
     private Button playDirectlyBtn;
@@ -40,7 +36,6 @@ public class MainActivity extends Activity {
         txvResult = (TextView) findViewById(R.id.textView);
 
         // databases
-        // dataBaseInitTrying();
         playDirectlyBtn = findViewById(R.id.startDirectlyBtn);
         loginBtn = findViewById(R.id.goLoginBtn);
 
@@ -54,7 +49,7 @@ public class MainActivity extends Activity {
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, 10);
         } else {
-            Toast.makeText(this, "Your Device Don't Support Speech Input", Toast.LENGTH_SHORT).show();
+            toast(this,"Your Device Don't Support Speech Input");
         }
     }
 
@@ -84,11 +79,10 @@ public class MainActivity extends Activity {
     private void dataBaseInitTrying(){
         // Database Init Test
         // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
+        DatabaseReference myRef = getFirebaseRef();
 
         //存数据
-        myRef.setValue("数据库连接测试!!!");
+        myRef.setValue("test");
         //监听到数据库有变化取出来打印
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
