@@ -71,3 +71,12 @@ go to project -> app -> src -> main -> res -> drawable
 #### Stucked when run APP and prompt “waiting for all target devices to come online”
 
  Tools -> AVD manager -> more -> cold boot now
+
+#### How to debug in real devices
+
+1. connect your phone through USB drive
+2. Settings
+3. about this phone
+4. click on building number quickly 7 times
+5. go into developer mode
+6. run your device on Android studio
