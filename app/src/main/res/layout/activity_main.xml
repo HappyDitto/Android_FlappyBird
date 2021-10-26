@@ -15,4 +15,15 @@
         android:background="@drawable/play"
         android:onClick="startGame" />
 
+    <ImageButton
+        android:id="@+id/empty_account"
+        android:layout_width="68dp"
+        android:layout_height="66dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="19dp"
+        android:onClick="accountLoginRegister"
+        tools:src="@tools:sample/avatars" />
+
 </RelativeLayout>
