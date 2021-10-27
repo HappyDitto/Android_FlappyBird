@@ -28,7 +28,10 @@ public class GameView extends View {
 
     int score = 0;
 
-    // maps
+    // get the light intensity from the main activity
+    int light = MainActivity.light_intensity;
+
+    // define multiple background
     Bitmap background;
     Bitmap background_night;
     Bitmap background_day;
@@ -130,6 +133,7 @@ public class GameView extends View {
         // draw the background on canvas
         canvas.drawBitmap(background,null, rect, null);
 
+        // this is where background changes
         if(score - preScore > 10){
             canvas.drawBitmap(background_night,null, rect, null);
         }
@@ -222,7 +226,8 @@ public class GameView extends View {
 
             if (gameState = true) {
                 // move bird upward by some unit
-                velocity = -30; // move 30 units upward
+                // move 30 units upward, but with stronger light, it can have a stronger jump ability.
+                velocity = -30 * ( 1 + (light/1000));
                 score += 1;
             }
         }
