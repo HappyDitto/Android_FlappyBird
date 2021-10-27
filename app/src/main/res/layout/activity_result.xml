@@ -17,14 +17,6 @@
         app:srcCompat="@drawable/end" />
 
     <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="150dp"
-        app:srcCompat="@drawable/button_play" />
-
-    <ImageView
         android:id="@+id/imageView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -79,5 +71,13 @@
         android:layout_marginBottom="70dp"
         android:layout_marginLeft="180dp"
         android:text="Replay" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="150dp"
+        app:srcCompat="@drawable/button_play" />
 
 </RelativeLayout>
