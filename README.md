@@ -77,3 +77,6 @@ add this line of code to
 android.injected.testOnly=false
 ```
 
+#### AVD configuration (Recommended choice)
+Pixel 3 API 30
+
