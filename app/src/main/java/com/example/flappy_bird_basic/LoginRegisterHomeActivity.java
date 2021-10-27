@@ -73,7 +73,11 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         //login logic here
         String email_input=emailField.getText().toString();
         String password_input=passwordField.getText().toString();
-        loginOnDemand(email_input,password_input);
+        if (TextUtils.isEmpty(email_input)||TextUtils.isEmpty(password_input)) {
+            Toast.makeText(LoginRegisterHomeActivity.this, "Empty email or password", Toast.LENGTH_SHORT).show();
+        }else {
+            loginOnDemand(email_input,password_input);
+        }
     }
 
     private void loginOnDemand(String email_input, String password_input) {
