@@ -1,14 +1,11 @@
 package com.example.flappy_bird_basic;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.speech.SpeechRecognizer;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.content.Context;
@@ -16,8 +13,6 @@ import android.graphics.Canvas;
 import android.os.Handler;
 import android.view.Display;
 import android.graphics.Point;
-
-import java.util.Date;
 import java.util.Random;
 
 public class GameView extends View {
@@ -26,9 +21,9 @@ public class GameView extends View {
     Handler handler; // Handler is required to schedule a runnable after some delay
     Runnable runnable;
     final int UPDATE_MILLIS = 30;
+    public static boolean dead = false;
 
     int score = 0;
-    int bestScore = 0;
 
     // get the light intensity from the main activity
     int light = MainActivity.light_intensity;
@@ -69,17 +64,8 @@ public class GameView extends View {
 
     int endX, endY;
 
-    SpeechRecognizer speechRecognizer;
-
     public GameView(Context context) {
         super(context);
-        handler = new Handler();
-        runnable = new Runnable() {
-            @Override
-            public void run() {
-                invalidate(); // this will call onDraw
-            }
-        };
 
         // load background pictures
         background = BitmapFactory.decodeResource(getResources(), R.drawable.background);
@@ -212,17 +198,13 @@ public class GameView extends View {
 
         }else{
             canvas.drawBitmap(over_pic, endX, endY, null);
-            if (score > bestScore){
-                bestScore = score;
-            }
+            dead = true;
         }
 
         // Display bird at the center of the screen
         // bird_1 and bird_2 have the same dimension
         canvas.drawBitmap(birds[birdFrame], birdX, birdY, null );
-        handler.postDelayed(runnable, UPDATE_MILLIS);
     }
-
 
     // get the touch event
     @Override
@@ -233,7 +215,7 @@ public class GameView extends View {
             if (gameState = true) {
                 // move bird upward by some unit
                 // move 30 units upward, but with stronger light, it can have a stronger jump ability.
-                velocity = -30 * ( 1 + (light/1000));
+                velocity = -25 * ( 1 + (light/1000));
                 score += 1;
             }
         }
