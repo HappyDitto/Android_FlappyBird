@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/comp90018_s2_project.iml" filepath="$PROJECT_DIR$/.idea/comp90018_s2_project.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Flappy_bird_basic.iml" filepath="$PROJECT_DIR$/.idea/modules/Flappy_bird_basic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Flappy_bird_basic.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Flappy_bird_basic.app.iml" />
     </modules>
   </component>
 </project>
