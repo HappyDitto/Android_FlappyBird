@@ -1,6 +1,7 @@
 package com.example.flappy_bird_basic;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -27,9 +28,18 @@ public class GameView extends View {
     final int UPDATE_MILLIS = 30;
 
     int score = 0;
+    int bestScore = 0;
 
-    // maps
+    // get the light intensity from the main activity
+    int light = MainActivity.light_intensity;
+
+    // define multiple background
     Bitmap background;
+    Bitmap background_night;
+    Bitmap background_day;
+    Bitmap background_magic;
+    Bitmap background_temple;
+
     Bitmap over_pic;
     Bitmap toptube, bottomtube;
     Bitmap[] birds; // Bitmap array for the bird
@@ -71,7 +81,13 @@ public class GameView extends View {
             }
         };
 
+        // load background pictures
         background = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+        background_night = BitmapFactory.decodeResource(getResources(), R.drawable.backgroud2);
+        background_day = BitmapFactory.decodeResource(getResources(), R.drawable.bg_day);
+        background_magic = BitmapFactory.decodeResource(getResources(), R.drawable.bg_magic);
+        background_temple = BitmapFactory.decodeResource(getResources(), R.drawable.bg_temple);
+
         over_pic = BitmapFactory.decodeResource(getResources(), R.drawable.end);
         toptube = BitmapFactory.decodeResource(getResources(),R.drawable.toptube);
         bottomtube = BitmapFactory.decodeResource(getResources(), R.drawable.bottomtube);
@@ -110,12 +126,32 @@ public class GameView extends View {
 
     }
 
+    int preScore = 0;
+
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
         // we will draw our view inside onDraw()
 
         // draw the background on canvas
         canvas.drawBitmap(background,null, rect, null);
+
+        // this is where background changes
+        if(score - preScore > 10){
+            canvas.drawBitmap(background_night,null, rect, null);
+        }
+        if(score - preScore > 20){
+            canvas.drawBitmap(background_day,null, rect, null);
+        }
+        if(score - preScore > 30){
+            canvas.drawBitmap(background_magic,null, rect, null);
+        }
+        if(score - preScore > 40){
+            canvas.drawBitmap(background_temple,null, rect, null);
+        }
+        if (score - preScore > 50){
+            preScore = score;
+        }
+
 
         // bird can move its wings
         if(birdFrame == 0){
@@ -176,6 +212,9 @@ public class GameView extends View {
 
         }else{
             canvas.drawBitmap(over_pic, endX, endY, null);
+            if (score > bestScore){
+                bestScore = score;
+            }
         }
 
         // Display bird at the center of the screen
@@ -183,6 +222,7 @@ public class GameView extends View {
         canvas.drawBitmap(birds[birdFrame], birdX, birdY, null );
         handler.postDelayed(runnable, UPDATE_MILLIS);
     }
+
 
     // get the touch event
     @Override
@@ -192,7 +232,8 @@ public class GameView extends View {
 
             if (gameState = true) {
                 // move bird upward by some unit
-                velocity = -30; // move 30 units upward
+                // move 30 units upward, but with stronger light, it can have a stronger jump ability.
+                velocity = -30 * ( 1 + (light/1000));
                 score += 1;
             }
         }

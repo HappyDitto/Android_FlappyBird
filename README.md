@@ -1,3 +1,30 @@
+### Features
+
+
+
+#### Game functions:
+
+- Bird can sense touching screen actions to jump
+- Bird who last longer can have a higher score
+- Background would change every 10 scores
+- When Bird touches ground or left behand left boundary, game ends
+
+#### Light sensor:
+
+- Bird can sense the light at the beginning of the game
+- With stronger the light, the bird will have a stronger ability to jump
+- Game start page will indicate the current light intensity and bird jump ability
+
+#### Database:
+
+
+
+#### Internet:
+
+
+
+
+
 ### Environment Info.
 
 #### Current runnable version for flappy bird:
@@ -77,3 +104,5 @@ add this line of code to
 android.injected.testOnly=false
 ```
 
+#### AVD configuration (Recommended choice)
+Pixel 3 API 30

@@ -6,6 +6,11 @@ import static utils.Utils.*;
 import androidx.annotation.NonNull;
 
 import android.app.Activity;
+import android.app.Service;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -24,20 +29,27 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import userInfo.User;
-
-
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements SensorEventListener {
     private Button playDirectlyBtn;
     private Button loginBtn;
-    private TextView txvResult;
+
+    // define variable for light sensors
+    TextView textView;
+    SensorManager sensorManager;
+    Sensor sensor;
+
+    // we can use this to pass light intensity to GameView
+    public static int light_intensity = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // speech recognition
-        txvResult = (TextView) findViewById(R.id.textView);
+        // light sensor
+        textView = (TextView) findViewById(R.id.textView);
+        sensorManager = (SensorManager) getSystemService(Service.SENSOR_SERVICE);
+        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
         // databases
         playDirectlyBtn = findViewById(R.id.startDirectlyBtn);
@@ -45,32 +57,40 @@ public class MainActivity extends Activity {
 
     }
 
-    public void getSpeechInput(View view) {
-        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+    /***
+     * Implementation for light sensors
+     */
 
-        if (intent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(intent, 10);
-        } else {
-            toast(this,"Your Device Don't Support Speech Input");
-        }
+    @Override
+    protected void onPause(){
+        super.onPause();
+        sensorManager.unregisterListener(this);
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    protected void onResume() {
+        super.onResume();
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+    }
 
-        switch (requestCode) {
-            case 10:
-                if (resultCode == RESULT_OK && data != null) {
-                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    txvResult.setText(result.get(0));
-                }
-                break;
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int i) {
+
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        if(sensorEvent.sensor.getType() == Sensor.TYPE_LIGHT){
+            // show on screen the bird jump
+            textView.setText(""+"Light Intensity: "+sensorEvent.values[0] + "\n"
+                    + "Bird Jump Strength: " + 30 * ( 1 + (sensorEvent.values[0]/1000)) + "Pixels");
+            light_intensity = (int)sensorEvent.values[0];
         }
     }
 
+    /***
+     * start games
+     */
 
     public void goStart(View view){
         Intent intent = new Intent(this, StartGame.class);
@@ -86,7 +106,7 @@ public class MainActivity extends Activity {
         DatabaseReference myRef = getFirebaseRef();
 
         //存数据
-        addUser(this,myRef,new User("1"));
+        addUser(this,new User("1"));
         //监听到数据库有变化取出来打印
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
