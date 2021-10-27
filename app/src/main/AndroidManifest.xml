@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Flappy_bird_basic">
         <activity
+            android:name=".GameOver"
+            android:exported="false" />
+        <activity
             android:name=".OnlineGamingActivity"
             android:exported="false" />
         <activity

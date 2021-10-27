@@ -1,6 +1,7 @@
 package com.example.flappy_bird_basic;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -27,6 +28,7 @@ public class GameView extends View {
     final int UPDATE_MILLIS = 30;
 
     int score = 0;
+    int bestScore = 0;
 
     // get the light intensity from the main activity
     int light = MainActivity.light_intensity;
@@ -210,6 +212,9 @@ public class GameView extends View {
 
         }else{
             canvas.drawBitmap(over_pic, endX, endY, null);
+            if (score > bestScore){
+                bestScore = score;
+            }
         }
 
         // Display bird at the center of the screen
@@ -217,6 +222,7 @@ public class GameView extends View {
         canvas.drawBitmap(birds[birdFrame], birdX, birdY, null );
         handler.postDelayed(runnable, UPDATE_MILLIS);
     }
+
 
     // get the touch event
     @Override
