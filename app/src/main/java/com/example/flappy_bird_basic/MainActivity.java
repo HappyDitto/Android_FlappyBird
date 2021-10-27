@@ -1,5 +1,6 @@
 package com.example.flappy_bird_basic;
 
+import static utils.DatabaseCRUD.*;
 import static utils.Utils.*;
 
 import androidx.annotation.NonNull;
@@ -21,6 +22,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
+
+import userInfo.User;
+
 
 public class MainActivity extends Activity {
     private Button playDirectlyBtn;
@@ -82,7 +86,7 @@ public class MainActivity extends Activity {
         DatabaseReference myRef = getFirebaseRef();
 
         //存数据
-        myRef.setValue("test");
+        addUser(this,myRef,new User("1"));
         //监听到数据库有变化取出来打印
         myRef.addValueEventListener(new ValueEventListener() {
             @Override

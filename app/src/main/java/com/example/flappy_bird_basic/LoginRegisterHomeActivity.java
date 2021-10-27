@@ -1,5 +1,8 @@
 package com.example.flappy_bird_basic;
 
+import static utils.DatabaseCRUD.addUser;
+import static utils.Utils.getFirebaseRef;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,6 +19,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+
+import userInfo.User;
 
 public class LoginRegisterHomeActivity extends AppCompatActivity {
     private EditText emailField;
@@ -54,7 +60,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Registered, You can now Login", Toast.LENGTH_SHORT).show();
-
+                    addUser(LoginRegisterHomeActivity.this, new User(mAuth.getCurrentUser().getUid()));
                 }else {
                     Toast.makeText(LoginRegisterHomeActivity.this, "Failed Registering", Toast.LENGTH_SHORT).show();
                 }
