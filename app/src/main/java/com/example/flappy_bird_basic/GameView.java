@@ -30,6 +30,11 @@ public class GameView extends View {
 
     // maps
     Bitmap background;
+    Bitmap background_night;
+    Bitmap background_day;
+    Bitmap background_magic;
+    Bitmap background_temple;
+
     Bitmap over_pic;
     Bitmap toptube, bottomtube;
     Bitmap[] birds; // Bitmap array for the bird
@@ -71,7 +76,13 @@ public class GameView extends View {
             }
         };
 
+        // load background pictures
         background = BitmapFactory.decodeResource(getResources(), R.drawable.background);
+        background_night = BitmapFactory.decodeResource(getResources(), R.drawable.backgroud2);
+        background_day = BitmapFactory.decodeResource(getResources(), R.drawable.bg_day);
+        background_magic = BitmapFactory.decodeResource(getResources(), R.drawable.bg_magic);
+        background_temple = BitmapFactory.decodeResource(getResources(), R.drawable.bg_temple);
+
         over_pic = BitmapFactory.decodeResource(getResources(), R.drawable.end);
         toptube = BitmapFactory.decodeResource(getResources(),R.drawable.toptube);
         bottomtube = BitmapFactory.decodeResource(getResources(), R.drawable.bottomtube);
@@ -110,12 +121,31 @@ public class GameView extends View {
 
     }
 
+    int preScore = 0;
+
     protected void onDraw(Canvas canvas){
         super.onDraw(canvas);
         // we will draw our view inside onDraw()
 
         // draw the background on canvas
         canvas.drawBitmap(background,null, rect, null);
+
+        if(score - preScore > 10){
+            canvas.drawBitmap(background_night,null, rect, null);
+        }
+        if(score - preScore > 20){
+            canvas.drawBitmap(background_day,null, rect, null);
+        }
+        if(score - preScore > 30){
+            canvas.drawBitmap(background_magic,null, rect, null);
+        }
+        if(score - preScore > 40){
+            canvas.drawBitmap(background_temple,null, rect, null);
+        }
+        if (score - preScore > 50){
+            preScore = score;
+        }
+
 
         // bird can move its wings
         if(birdFrame == 0){
