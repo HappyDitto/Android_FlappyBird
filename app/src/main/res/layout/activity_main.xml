@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:background="@drawable/background">
+
+
+
+    <Button
+        android:id="@+id/startDirectlyBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="Start Game"
+        android:onClick="goStart" />
+
+    <Button
+        android:id="@+id/goLoginBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/startDirectlyBtn"
+        android:text="Login First"
+        android:onClick="accountLoginRegister" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="133dp"
+        android:text="TextView" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="181dp"
+        android:onClick="getSpeechInput"
+        android:src="@android:drawable/presence_audio_away" />
+
+
+    <!--    <ImageButton-->
+<!--        android:id="@+id/empty_account"-->
+<!--        android:layout_width="68dp"-->
+<!--        android:layout_height="66dp"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:layout_marginStart="23dp"-->
+<!--        android:layout_marginTop="19dp"-->
+<!--        android:onClick="accountLoginRegister"-->
+<!--        tools:src="@tools:sample/avatars" />-->
+
+</RelativeLayout>
