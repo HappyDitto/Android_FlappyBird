@@ -45,7 +45,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         String email_input=emailField.getText().toString();
         String password_input=passwordField.getText().toString();
         if (TextUtils.isEmpty(email_input)||TextUtils.isEmpty(password_input)) {
-            Toast.makeText(this,"Empty email or password",Toast.LENGTH_SHORT);
+            Toast.makeText(LoginRegisterHomeActivity.this, "Empty email or password", Toast.LENGTH_SHORT).show();
         }else {
             registerOnDemand(email_input,password_input);
         }
