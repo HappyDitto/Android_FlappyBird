@@ -14,6 +14,8 @@ import android.os.Handler;
 import android.view.Display;
 import android.graphics.Point;
 import java.util.Random;
+import static com.example.flappy_bird_basic.MainActivity.bestscore;
+import static com.example.flappy_bird_basic.StartGame.onescore;
 
 public class GameView extends View {
 
@@ -193,12 +195,19 @@ public class GameView extends View {
                 paint.setColor(Color.BLACK);
                 paint.setTextSize(60);
                 canvas.drawText("Score: " + String.valueOf(score),dWidth-300,50,paint);
-
+                if(score > onescore){
+                    onescore = score;
+                }
             }
 
         }else{
             canvas.drawBitmap(over_pic, endX, endY, null);
             dead = true;
+
+            //add bestscore
+            if(onescore > bestscore){
+                bestscore = onescore;
+            }
         }
 
         // Display bird at the center of the screen
