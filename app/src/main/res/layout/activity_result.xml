@@ -95,8 +95,9 @@
         android:layout_width="65dp"
         android:layout_height="38dp"
         android:layout_marginStart="20dp"
+        android:layout_marginTop="48dp"
         app:layout_constraintStart_toStartOf="@+id/scoreboard"
+        app:layout_constraintTop_toTopOf="@+id/scoreboard"
         app:srcCompat="@drawable/medals_0"
-        tools:layout_editor_absoluteY="370dp"
         tools:ignore="MissingConstraints" />
 </androidx.constraintlayout.widget.ConstraintLayout>
