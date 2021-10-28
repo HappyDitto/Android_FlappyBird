@@ -1,83 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".result"
-    android:background="@drawable/background">
+    android:background="@drawable/bg_night"
+    tools:context=".GameOver">
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/gameover"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="120dp"
+        android:layout_marginBottom="82dp"
+        app:layout_constraintBottom_toTopOf="@+id/scoreboard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/end" />
 
+    x
+
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/scoreboard"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginBottom="284dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/score_panel" />
+
+    <ImageButton
+        android:id="@+id/startbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/listbutton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.873"
+        app:srcCompat="@drawable/button_play" />
+
+    <ImageButton
+        android:id="@+id/listbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/startbutton"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.873"
         app:srcCompat="@drawable/button_score" />
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/newtext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="130dp"
-        android:layout_marginLeft="8dp"
-        app:srcCompat="@drawable/medals_1" />
-
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="180dp"
-        android:layout_marginLeft="8dp"
-        app:srcCompat="@drawable/medals_0" />
-
-    <ImageView
-        android:id="@+id/imageView7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="230dp"
-        android:layout_marginLeft="8dp"
-        app:srcCompat="@drawable/medals_3" />
-
-    <ImageView
-        android:id="@+id/imageView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="280dp"
-        android:layout_marginLeft="8dp"
-        app:srcCompat="@drawable/medals_2" />
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="80dp"
+        app:layout_constraintEnd_toEndOf="@+id/scoreboard"
+        app:layout_constraintTop_toTopOf="@+id/scoreboard"
+        app:srcCompat="@drawable/newtext" />
 
     <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="70dp"
-        android:layout_marginLeft="130dp"
-        android:text="Your score:" />
+        android:id="@+id/score"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="117dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="right"
+        android:text="0"
+        app:layout_constraintBottom_toTopOf="@+id/bestscore"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/medal0"
+        app:layout_constraintTop_toBottomOf="@+id/newtext" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="70dp"
-        android:layout_marginLeft="180dp"
-        android:text="Replay" />
+        android:id="@+id/bestscore"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="117dp"
+        android:layout_marginBottom="137dp"
+        android:gravity="right"
+        android:text="0"
+        app:layout_constraintBottom_toTopOf="@+id/listbutton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/medal0"
+        app:layout_constraintTop_toBottomOf="@+id/score" />
 
-    <ImageButton
-        android:id="@+id/imageButton2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="150dp"
-        app:srcCompat="@drawable/button_play" />
-
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/medal0"
+        android:layout_width="65dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="@+id/scoreboard"
+        app:srcCompat="@drawable/medals_0"
+        tools:layout_editor_absoluteY="370dp"
+        tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>
