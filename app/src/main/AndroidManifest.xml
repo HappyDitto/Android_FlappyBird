@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Flappy_bird_basic">
         <activity
+            android:name=".ProfileLogoutActivity"
+            android:exported="false" />
+        <activity
             android:name=".result"
             android:exported="true" />
         <activity

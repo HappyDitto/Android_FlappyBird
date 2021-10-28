@@ -8,12 +8,12 @@
     tools:context=".OnlineGamingActivity">
 
     <ImageButton
-        android:id="@+id/logout_btn"
+        android:id="@+id/profile_logout_btn"
         android:layout_width="68dp"
         android:layout_height="66dp"
         android:layout_marginStart="23dp"
         android:layout_marginTop="19dp"
-        android:onClick="logoutExit"
+        android:onClick="profileLogoutEntry"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />

@@ -20,4 +20,8 @@ public class OnlineGamingActivity extends AppCompatActivity {
         Toast.makeText(this,"Successfully Logout",Toast.LENGTH_LONG);
         startActivity(new Intent(this,MainActivity.class));
     }
+
+    public void profileLogoutEntry(View view) {
+        startActivity(new Intent(OnlineGamingActivity.this,ProfileLogoutActivity.class));
+    }
 }
