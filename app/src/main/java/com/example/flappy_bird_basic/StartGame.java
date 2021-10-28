@@ -28,6 +28,9 @@ public class StartGame extends Activity {
         gameView = new GameView(this);
         setContentView(gameView);
 
+//        change dead type
+        GameView.dead = false;
+
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
