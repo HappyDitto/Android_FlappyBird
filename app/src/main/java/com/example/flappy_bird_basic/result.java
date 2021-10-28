@@ -6,8 +6,11 @@ import static com.example.flappy_bird_basic.StartGame.onescore;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -27,6 +30,16 @@ public class result extends AppCompatActivity {
         RefreshTextObject.setText(String.valueOf(onescore));
         TextView RefreshbestTextObject = (TextView) findViewById(R.id.bestscoretext);
         RefreshbestTextObject.setText(String.valueOf(bestscore));
+
+        //WebView
+        WebView browser=(WebView)findViewById(R.id.webView);
+//        TextView thistext = (TextView) findViewById(R.id.scoretext);
+//        int thisscore = Integer.parseInt(thistext.getText().toString());
+        browser.setBackgroundResource(R.drawable.number3);
+        browser.setBackgroundColor(Color.argb(0, 0, 0, 0));
+        WebSettings settings = browser.getSettings();
+        settings.setTextZoom(115);
+        browser.loadUrl("http://numbersapi.com/" + onescore);
 
         button = (ImageButton) findViewById(R.id.startbutton);
         button.setOnClickListener(new View.OnClickListener() {
