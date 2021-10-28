@@ -35,7 +35,7 @@ public class result extends AppCompatActivity {
         WebView browser=(WebView)findViewById(R.id.webView);
 //        TextView thistext = (TextView) findViewById(R.id.scoretext);
 //        int thisscore = Integer.parseInt(thistext.getText().toString());
-        browser.setBackgroundResource(R.drawable.number3);
+        browser.setBackgroundResource(R.drawable.number1);
         browser.setBackgroundColor(Color.argb(0, 0, 0, 0));
         WebSettings settings = browser.getSettings();
         settings.setTextZoom(115);
