@@ -41,6 +41,8 @@ public class MainActivity extends Activity implements SensorEventListener {
     // we can use this to pass light intensity to GameView
     public static int light_intensity = 0;
 
+    public static int bestscore = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

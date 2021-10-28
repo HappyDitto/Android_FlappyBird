@@ -13,6 +13,8 @@ import java.util.TimerTask;
 
 public class StartGame extends Activity {
 
+    public static int onescore = 0;
+
     GameView gameView;
     private Handler handler = new Handler(); // handler object used for handler thread
     private boolean hasDied = false; // Used to help re-set game loop when user has died
@@ -28,6 +30,10 @@ public class StartGame extends Activity {
         gameView = new GameView(this);
         setContentView(gameView);
 
+//        change dead type
+        GameView.dead = false;
+        onescore = 0;
+
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -40,7 +46,8 @@ public class StartGame extends Activity {
                         if (GameView.dead == true && hasDied == false ) // if user dies
                         {
 
-                            startActivity(new Intent(StartGame.this, result.class)); // show results screen
+                            Intent intent=new Intent(StartGame.this, result.class);// show results screen
+                            startActivity(intent);
 
                             hasDied = true; // set this boolean to true for two reasons. 1. allows the user to use "try again" button multiple times
                             // 2. shows result screen once, instead of re-printing it continually while the if loop conditions are met
