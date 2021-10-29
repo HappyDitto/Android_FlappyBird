@@ -125,14 +125,16 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     }
 
+    //possible discard of button
     public void accountLoginRegister(View view) {
         Intent intentForLoginRegister= new Intent(this,LoginRegisterHomeActivity.class);
         startActivity(intentForLoginRegister);
     }
 
 
+    // change to graphical account entry
     public void userAccountEntry(View view) {
-        //need logic for login register and user profile 
+        //need logic for login register and user profile
         startActivity(new Intent(MainActivity.this,ProfileLogoutActivity.class));
     }
 }
