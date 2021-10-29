@@ -85,7 +85,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Logined", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginRegisterHomeActivity.this,OnlineGamingActivity.class));
+                startActivity(new Intent(LoginRegisterHomeActivity.this,MainActivity.class));
                 finish();
             }
         });
