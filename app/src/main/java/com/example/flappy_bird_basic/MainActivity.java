@@ -131,4 +131,8 @@ public class MainActivity extends Activity implements SensorEventListener {
     }
 
 
+    public void userAccountEntry(View view) {
+        //need logic for login register and user profile 
+        startActivity(new Intent(MainActivity.this,ProfileLogoutActivity.class));
+    }
 }
