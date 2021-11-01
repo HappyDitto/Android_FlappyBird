@@ -18,12 +18,14 @@ import android.content.Intent;
 import android.widget.Button;
 import android.widget.TextView;
 import android.speech.RecognizerIntent;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
 import java.util.Locale;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -144,6 +146,11 @@ public class MainActivity extends Activity implements SensorEventListener {
     // change to graphical account entry
     public void userAccountEntry(View view) {
         //need logic for login register and user profile
-        startActivity(new Intent(MainActivity.this,ProfileLogoutActivity.class));
+        FirebaseUser currUser= authInMain.getCurrentUser();
+        if (currUser!=null) {
+            startActivity(new Intent(MainActivity.this,ProfileLogoutActivity.class));
+        }else {
+            Toast.makeText(MainActivity.this, "Login to check your profile", Toast.LENGTH_SHORT).show();
+        }
     }
 }
