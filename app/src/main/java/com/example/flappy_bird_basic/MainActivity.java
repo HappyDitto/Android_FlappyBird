@@ -142,6 +142,17 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currUser= authInMain.getCurrentUser();
+        if(currUser != null){
+            ((Button) findViewById(R.id.goLoginBtn)).setEnabled(false);
+            ((Button) findViewById(R.id.goLoginBtn)).setVisibility(View.GONE);
+        }
+    }
+
 
     // change to graphical account entry
     public void userAccountEntry(View view) {

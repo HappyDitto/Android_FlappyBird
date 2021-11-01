@@ -53,6 +53,7 @@ public class ProfileLogoutActivity extends AppCompatActivity {
         }
     }
 
+// asynchronous need to be solved
     public void logoutEntry(View view) {
         FirebaseUser currentUser = authInProfile.getCurrentUser();
         if(currentUser != null){
