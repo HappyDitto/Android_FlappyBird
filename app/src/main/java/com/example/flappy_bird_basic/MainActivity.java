@@ -23,6 +23,7 @@ import android.speech.RecognizerIntent;
 import java.util.ArrayList;
 import java.util.Locale;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +33,7 @@ import userInfo.User;
 public class MainActivity extends Activity implements SensorEventListener {
     private Button playDirectlyBtn;
     private Button loginBtn;
+    private FirebaseAuth authInMain;
 
     // define variable for light sensors
     TextView textView;
@@ -47,6 +49,8 @@ public class MainActivity extends Activity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        authInMain=FirebaseAuth.getInstance();
 
         // light sensor
         textView = (TextView) findViewById(R.id.textView);
@@ -127,6 +131,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     //possible discard of button
     public void accountLoginRegister(View view) {
+//        ((Button)findViewById(R.id.goLoginBtn)).setEnabled(false);
         Intent intentForLoginRegister= new Intent(this,LoginRegisterHomeActivity.class);
         startActivity(intentForLoginRegister);
     }

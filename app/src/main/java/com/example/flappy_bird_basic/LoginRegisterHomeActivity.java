@@ -1,7 +1,6 @@
 package com.example.flappy_bird_basic;
 
 import static utils.DatabaseCRUD.addUser;
-import static utils.Utils.getFirebaseRef;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +18,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
 
 import userInfo.User;
 
@@ -27,7 +25,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
     private EditText emailField;
     private EditText passwordField;
     private Button loginBtn;
-    private FirebaseAuth mAuth;
+    private FirebaseAuth authInLogReg;
 
 
     @Override
@@ -37,7 +35,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         emailField =(EditText) findViewById(R.id.email_field);
         passwordField =(EditText) findViewById(R.id.password_field);
         loginBtn=(Button) findViewById(R.id.login_btn);
-        mAuth = FirebaseAuth.getInstance();
+        authInLogReg = FirebaseAuth.getInstance();
 
     }
 
@@ -55,12 +53,12 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
     }
 
     private void registerOnDemand(String email_input, String password_input) {
-        mAuth.createUserWithEmailAndPassword(email_input,password_input).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        authInLogReg.createUserWithEmailAndPassword(email_input,password_input).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Registered, You can now Login", Toast.LENGTH_SHORT).show();
-                    addUser(LoginRegisterHomeActivity.this, new User(mAuth.getCurrentUser().getUid()));
+                    addUser(LoginRegisterHomeActivity.this, new User(authInLogReg.getCurrentUser().getUid()));
                 }else {
                     Toast.makeText(LoginRegisterHomeActivity.this, "Failed Registering", Toast.LENGTH_SHORT).show();
                 }
@@ -81,7 +79,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
     }
 
     private void loginOnDemand(String email_input, String password_input) {
-        mAuth.signInWithEmailAndPassword(email_input,password_input).addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
+        authInLogReg.signInWithEmailAndPassword(email_input,password_input).addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Logined", Toast.LENGTH_SHORT).show();
