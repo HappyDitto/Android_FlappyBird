@@ -99,7 +99,9 @@ public class MainActivity extends Activity implements SensorEventListener {
      */
 
     public void goStart(View view){
-        Intent intent = new Intent(this, StartGame.class);
+//        Intent intent = new Intent(this, StartGame.class);
+//        Intent intent = new Intent(this, StartPlayWithAI.class);
+        Intent intent = new Intent(this, StartTrain.class);
         startActivity(intent);
     }
 
@@ -111,8 +113,6 @@ public class MainActivity extends Activity implements SensorEventListener {
         // Write a message to the database
         DatabaseReference myRef = getFirebaseRef();
 
-        //存数据
-        addUser(this,new User("1"));
         //监听到数据库有变化取出来打印
         myRef.addValueEventListener(new ValueEventListener() {
             @Override

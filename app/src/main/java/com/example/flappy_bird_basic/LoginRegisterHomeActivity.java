@@ -58,7 +58,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Registered, You can now Login", Toast.LENGTH_SHORT).show();
-                    addUser(LoginRegisterHomeActivity.this, new User(authInLogReg.getCurrentUser().getUid()));
+                    addUser(LoginRegisterHomeActivity.this, new User(authInLogReg.getCurrentUser().getUid(),authInLogReg.getCurrentUser().getDisplayName(), authInLogReg.getCurrentUser().getPhotoUrl()));
                 }else {
                     Toast.makeText(LoginRegisterHomeActivity.this, "Failed Registering", Toast.LENGTH_SHORT).show();
                 }
