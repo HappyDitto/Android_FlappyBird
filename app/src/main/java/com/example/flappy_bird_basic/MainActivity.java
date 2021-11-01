@@ -107,8 +107,6 @@ public class MainActivity extends Activity implements SensorEventListener {
         // Write a message to the database
         DatabaseReference myRef = getFirebaseRef();
 
-        //存数据
-        addUser(this,new User("1"));
         //监听到数据库有变化取出来打印
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
