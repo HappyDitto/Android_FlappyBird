@@ -21,7 +21,8 @@
 
 #### Internet:
 
-
+- Scoreboard will generate interesting facts about player's score
+- number facts are pulled from Numbers API online server  
 
 
 

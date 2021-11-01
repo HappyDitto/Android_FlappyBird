@@ -13,7 +13,6 @@
         android:layout_height="66dp"
         android:layout_marginStart="23dp"
         android:layout_marginTop="19dp"
-        android:onClick="profileLogoutEntry"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars" />

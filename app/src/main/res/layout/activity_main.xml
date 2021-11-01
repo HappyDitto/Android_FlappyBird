@@ -8,22 +8,21 @@
     android:background="@drawable/background">
 
 
-
     <Button
         android:id="@+id/startDirectlyBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Start Game"
-        android:onClick="goStart" />
+        android:onClick="goStart"
+        android:text="Start Game" />
 
     <Button
         android:id="@+id/goLoginBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/startDirectlyBtn"
-        android:text="Login First"
-        android:onClick="accountLoginRegister" />
+        android:onClick="accountLoginRegister"
+        android:text="Login First" />
 
     <TextView
         android:id="@+id/textView"
@@ -33,6 +32,17 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="133dp"
         android:text="Light intensity Values" />
+
+    <ImageButton
+        android:id="@+id/user_account_entry"
+        android:layout_width="81dp"
+        android:layout_height="76dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="10dp"
+        android:onClick="userAccountEntry"
+        tools:src="@tools:sample/avatars" />
 
 
     <!--    <ImageButton-->

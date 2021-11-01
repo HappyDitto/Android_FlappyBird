@@ -60,7 +60,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Registered, You can now Login", Toast.LENGTH_SHORT).show();
-                    addUser(LoginRegisterHomeActivity.this, new User(mAuth.getCurrentUser().getUid()));
+                    addUser(LoginRegisterHomeActivity.this, new User(mAuth.getCurrentUser().getUid(),mAuth.getCurrentUser().getDisplayName(), mAuth.getCurrentUser().getPhotoUrl()));
                 }else {
                     Toast.makeText(LoginRegisterHomeActivity.this, "Failed Registering", Toast.LENGTH_SHORT).show();
                 }
@@ -85,7 +85,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
             @Override
             public void onSuccess(AuthResult authResult) {
                 Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Logined", Toast.LENGTH_SHORT).show();
-                startActivity(new Intent(LoginRegisterHomeActivity.this,OnlineGamingActivity.class));
+                startActivity(new Intent(LoginRegisterHomeActivity.this,MainActivity.class));
                 finish();
             }
         });
