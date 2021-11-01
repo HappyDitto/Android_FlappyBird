@@ -51,6 +51,9 @@ public class MainActivity extends Activity implements SensorEventListener {
         setContentView(R.layout.activity_main);
 
         authInMain=FirebaseAuth.getInstance();
+        LoginRegisterHomeActivity.setUpAuth(authInMain);
+        ProfileLogoutActivity.setUpAuth(authInMain);
+
 
         // light sensor
         textView = (TextView) findViewById(R.id.textView);
@@ -134,6 +137,7 @@ public class MainActivity extends Activity implements SensorEventListener {
 //        ((Button)findViewById(R.id.goLoginBtn)).setEnabled(false);
         Intent intentForLoginRegister= new Intent(this,LoginRegisterHomeActivity.class);
         startActivity(intentForLoginRegister);
+
     }
 
 

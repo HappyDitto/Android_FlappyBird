@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -18,14 +19,17 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import userInfo.User;
 
 public class LoginRegisterHomeActivity extends AppCompatActivity {
     private EditText emailField;
     private EditText passwordField;
+    private EditText usernameField;
     private Button loginBtn;
-    private FirebaseAuth authInLogReg;
+    private static FirebaseAuth authInLogReg;
 
 
     @Override
@@ -34,29 +38,47 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_register_home);
         emailField =(EditText) findViewById(R.id.email_field);
         passwordField =(EditText) findViewById(R.id.password_field);
+        usernameField=(EditText) findViewById(R.id.username_field);
         loginBtn=(Button) findViewById(R.id.login_btn);
-        authInLogReg = FirebaseAuth.getInstance();
+//        authInLogReg = FirebaseAuth.getInstance();//possible discard
 
+    }
+
+    public static void setUpAuth(FirebaseAuth authInMain) {
+        authInLogReg=authInMain;
     }
 
     public void registerEntry(View view) {
         String email_input=emailField.getText().toString();
         String password_input=passwordField.getText().toString();
+        String username_input=usernameField.getText().toString();
         if (TextUtils.isEmpty(email_input)||TextUtils.isEmpty(password_input)) {
             Toast.makeText(LoginRegisterHomeActivity.this, "Empty email or password", Toast.LENGTH_SHORT).show();
         }else {
-            registerOnDemand(email_input,password_input);
+            registerOnDemand(email_input,password_input,username_input);
         }
         //register logic here
 
 
     }
 
-    private void registerOnDemand(String email_input, String password_input) {
+    private void registerOnDemand(String email_input, String password_input, String username_input) {
         authInLogReg.createUserWithEmailAndPassword(email_input,password_input).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
+                    UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
+                            .setDisplayName(username_input)
+                            .setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))                  //waiting to be changed
+                            .build();
+                    currUser.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful())
+                                Toast.makeText(LoginRegisterHomeActivity.this, "Profile Update Successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                     Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Registered, You can now Login", Toast.LENGTH_SHORT).show();
                     addUser(LoginRegisterHomeActivity.this, new User(authInLogReg.getCurrentUser().getUid(),authInLogReg.getCurrentUser().getDisplayName(), authInLogReg.getCurrentUser().getPhotoUrl()));
                 }else {
