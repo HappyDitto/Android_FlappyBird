@@ -39,7 +39,7 @@ public class ProfileLogoutActivity extends AppCompatActivity {
         profileSetupEntry();
     }
 
-    
+
     private void profileSetupEntry() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {

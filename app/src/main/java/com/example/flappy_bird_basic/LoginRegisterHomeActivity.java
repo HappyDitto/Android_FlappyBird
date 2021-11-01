@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -54,7 +55,9 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         String username_input=usernameField.getText().toString();
         if (TextUtils.isEmpty(email_input)||TextUtils.isEmpty(password_input)) {
             Toast.makeText(LoginRegisterHomeActivity.this, "Empty email or password", Toast.LENGTH_SHORT).show();
-        }else {
+        }else if (password_input.length()<6) {
+            Toast.makeText(LoginRegisterHomeActivity.this, "Password too short", Toast.LENGTH_SHORT).show();
+        } else {
             registerOnDemand(email_input,password_input,username_input);
         }
         //register logic here
@@ -107,6 +110,11 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
                 Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Logined", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LoginRegisterHomeActivity.this,MainActivity.class));
                 finish();
+            }
+        }).addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(LoginRegisterHomeActivity.this, "Failed Login, register or check your credentials", Toast.LENGTH_SHORT).show();
             }
         });
     }
