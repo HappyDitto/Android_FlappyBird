@@ -70,16 +70,16 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
                     FirebaseUser currUser = FirebaseAuth.getInstance().getCurrentUser();
                     UserProfileChangeRequest profileUpdates = new UserProfileChangeRequest.Builder()
                             .setDisplayName(username_input)
-                            .setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))                  //waiting to be changed
+                            .setPhotoUri(Uri.parse("https://example.com/jane-q-user/profile.jpg"))                  //upload image logic needed, waiting to be changed
                             .build();
                     currUser.updateProfile(profileUpdates).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful())
-                                Toast.makeText(LoginRegisterHomeActivity.this, "Profile Update Successfully", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginRegisterHomeActivity.this, "Registered and Profile Updated Successfully, You can now Login", Toast.LENGTH_SHORT).show();
                         }
                     });
-                    Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Registered, You can now Login", Toast.LENGTH_SHORT).show();
+
                     addUser(LoginRegisterHomeActivity.this, new User(authInLogReg.getCurrentUser().getUid(),authInLogReg.getCurrentUser().getDisplayName(), authInLogReg.getCurrentUser().getPhotoUrl()));
                 }else {
                     Toast.makeText(LoginRegisterHomeActivity.this, "Failed Registering", Toast.LENGTH_SHORT).show();
