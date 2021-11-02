@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 public class result extends AppCompatActivity {
     private ImageButton button;
+    private ImageButton goTopListButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +48,15 @@ public class result extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openMainActivity();
+            }
+        });
+
+        goTopListButton = (ImageButton) findViewById(R.id.listbutton);
+        goTopListButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(result.this, TopUserList.class);
+                startActivity(intent);
             }
         });
     }

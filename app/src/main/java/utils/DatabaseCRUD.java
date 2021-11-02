@@ -25,14 +25,13 @@ import userInfo.User;
 
 public  class DatabaseCRUD {
     private static DatabaseReference dbRef = getFirebaseRef();
-    private List<User> topUser = new ArrayList<>();
-
+    private List<User> topUserList = new ArrayList<>();
     public DatabaseCRUD() {
 
     }
 
     public interface DataStatus{
-        void TopScoreUserListIsLoaded();
+        void TopScoreUserListIsLoaded(List<User> topUserList);
     }
 
     public static void addUser(final Activity aca, final User user){
@@ -47,18 +46,18 @@ public  class DatabaseCRUD {
         dbRef.child("Users").child(uId).child("bestScore").setValue(score);
     }
 
-    public static void getTopScoreUsers(int topN){
+    public void getTopScoreUsers(final DataStatus ds, int topN){
         Query bestScoreUsers = dbRef.child("Users").orderByChild("bestScore").limitToLast(topN);
         bestScoreUsers.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<User> res = new ArrayList<User>();
+                topUserList.clear();
                 for (DataSnapshot item  : snapshot.getChildren()) {
-//                    Log.i("看看信息：",snapshot.getValue().toString());
                     User user = item.getValue(User.class);
-                    Log.i("看看信息1：",user.toString());
-                    res.add(user);
+                    topUserList.add(user);
+                    Log.i("看看信息1：",topUserList.toString());
                 }
+                ds.TopScoreUserListIsLoaded(topUserList);
             }
 
             @Override
