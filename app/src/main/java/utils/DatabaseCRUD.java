@@ -3,10 +3,12 @@ package utils;
 import static utils.Utils.getFirebaseRef;
 
 import android.app.Activity;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,6 +21,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import userInfo.User;
@@ -49,6 +52,7 @@ public  class DatabaseCRUD {
     public void getTopScoreUsers(final DataStatus ds, int topN){
         Query bestScoreUsers = dbRef.child("Users").orderByChild("bestScore").limitToLast(topN);
         bestScoreUsers.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 topUserList.clear();
@@ -57,6 +61,7 @@ public  class DatabaseCRUD {
                     topUserList.add(user);
                     Log.i("看看信息1：",topUserList.toString());
                 }
+                topUserList.sort(Comparator.comparing(User::getBestScore).reversed());
                 ds.TopScoreUserListIsLoaded(topUserList);
             }
 
