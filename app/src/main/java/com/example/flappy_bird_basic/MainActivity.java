@@ -103,12 +103,12 @@ public class MainActivity extends Activity implements SensorEventListener {
      * start games
      */
 
-//    public void goStart(View view){
-////        Intent intent = new Intent(this, StartGame.class);
-////        Intent intent = new Intent(this, StartPlayWithAI.class);
+    public void goStart(View view){
+//        Intent intent = new Intent(this, StartGame.class);
+        Intent intent = new Intent(this, StartPlayWithAI.class);
 //        Intent intent = new Intent(this, StartTrain.class);
-//        startActivity(intent);
-//    }
+        startActivity(intent);
+    }
 
     /***
      * Firebase Runtime Database Connection Testing

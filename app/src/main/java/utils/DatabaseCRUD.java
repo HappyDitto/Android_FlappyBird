@@ -25,6 +25,16 @@ import userInfo.User;
 
 public  class DatabaseCRUD {
     private static DatabaseReference dbRef = getFirebaseRef();
+    private List<User> topUser = new ArrayList<>();
+
+    public DatabaseCRUD() {
+
+    }
+
+    public interface DataStatus{
+        void TopScoreUserListIsLoaded();
+    }
+
     public static void addUser(final Activity aca, final User user){
         dbRef.child("Users").child(user.getuId()).setValue(user);
 //                .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -39,16 +49,8 @@ public  class DatabaseCRUD {
 //        });
     }
 
-    public static int getUserBestScore(String uId){
-        int[] res = {0};
-        dbRef.child("Users").child(uId).child("bestScore").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                Log.i("check best score：", String.valueOf(task.getResult().getValue()));
-                res[0] =  Integer.parseInt(String.valueOf(task.getResult().getValue()));
-            }
-        });;
-        return res[0];
+    public static Task getUserBestScore(String uId){
+        return dbRef.child("Users").child(uId).child("bestScore").get();
     }
 
     public static void setUserBestScore(String uId, int score){

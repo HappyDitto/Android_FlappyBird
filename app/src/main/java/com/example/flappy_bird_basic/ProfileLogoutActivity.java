@@ -1,10 +1,12 @@
 package com.example.flappy_bird_basic;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,8 +15,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import static com.example.flappy_bird_basic.MainActivity.bestscore;
 
+import static utils.DatabaseCRUD.setUserBestScore;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 
 import utils.DatabaseCRUD;
 
@@ -58,8 +65,15 @@ public class ProfileLogoutActivity extends AppCompatActivity {
 
             //zpy update score part
             String thisuid = user.getUid();
+            Log.i("我的ID：", thisuid);
+            setUserBestScore(thisuid,34);
             int thisScore = 0;
-            thisScore = DatabaseCRUD.getUserBestScore(thisuid);
+            DatabaseCRUD.getUserBestScore(thisuid).addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    Log.i("最好成绩：", String.valueOf(task.getResult().getValue()));
+                }
+            });
             userScoreText.setText(String.valueOf(2222));
 //            userScoreText.setText(String.valueOf(thisScore));
 
@@ -89,9 +103,16 @@ public class ProfileLogoutActivity extends AppCompatActivity {
 
             //zpy update score part
             String thisuid = user.getUid();
-            DatabaseCRUD.setUserBestScore(thisuid,bestscore);
-            int thisScore = DatabaseCRUD.getUserBestScore(thisuid);
-            userScoreText.setText(String.valueOf(thisScore));
+            setUserBestScore(thisuid,bestscore);
+//            int thisScore = DatabaseCRUD.getUserBestScore(thisuid);
+            DatabaseCRUD.getUserBestScore(thisuid).addOnCompleteListener(new OnCompleteListener() {
+                @Override
+                public void onComplete(@NonNull Task task) {
+                    Log.i("最好成绩：", task.getResult().toString());
+                    userScoreText.setText(String.valueOf(task.getResult()));
+                }
+            });
+
 
         }
 
