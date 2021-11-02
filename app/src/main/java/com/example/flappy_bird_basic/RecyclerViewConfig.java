@@ -1,6 +1,7 @@
 package com.example.flappy_bird_basic;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -35,7 +36,11 @@ public class RecyclerViewConfig {
 
         public void bind(User user){
             userName.setText(user.getuName());
+            userName.setTextColor(Color.parseColor("#f7fafa"));
+            userName.setTextSize(25);
             userBestScore.setText(String.valueOf(user.getBestScore()));
+            userBestScore.setTextColor(Color.parseColor("#f7fafa"));
+            userBestScore.setTextSize(24);
         }
     }
 
