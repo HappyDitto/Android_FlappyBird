@@ -32,6 +32,7 @@ public class ProfileLogoutActivity extends AppCompatActivity {
     private Button updateProfileBtn;
     private Button logoutBtn;
     private TextView userScoreText;
+    private int databaseScore = 0;
 
 
     public static void setUpAuth(FirebaseAuth authInMain) {
@@ -66,15 +67,16 @@ public class ProfileLogoutActivity extends AppCompatActivity {
             //zpy update score part
             String thisuid = user.getUid();
             Log.i("我的ID：", thisuid);
-//            setUserBestScore(thisuid,34);
-            int thisScore = 0;
+            
             DatabaseCRUD.getUserBestScore(thisuid).addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<DataSnapshot> task) {
-                    Log.i("最好成绩：", String.valueOf(task.getResult().getValue()));
+                    DataSnapshot scoreData = (DataSnapshot) task.getResult();
+                    Log.i("最好成绩：", scoreData.getValue().toString());
+                    userScoreText.setText(String.valueOf(scoreData.getValue()));
                 }
             });
-            userScoreText.setText(String.valueOf(2222));
+//            userScoreText.setText(String.valueOf(2222));
 //            userScoreText.setText(String.valueOf(thisScore));
 
         }
@@ -103,17 +105,32 @@ public class ProfileLogoutActivity extends AppCompatActivity {
 
             //zpy update score part
             String thisuid = user.getUid();
-            setUserBestScore(thisuid,bestscore);
-//            int thisScore = DatabaseCRUD.getUserBestScore(thisuid);
+
             DatabaseCRUD.getUserBestScore(thisuid).addOnCompleteListener(new OnCompleteListener() {
                 @Override
                 public void onComplete(@NonNull Task task) {
-                    Log.i("最好成绩：", task.getResult().toString());
-                    userScoreText.setText(String.valueOf(task.getResult()));
+                    DataSnapshot scoreData = (DataSnapshot) task.getResult();
+                    Log.i("最好成绩：", scoreData.getValue().toString());
+                    databaseScore = new Long((Long) scoreData.getValue()).intValue();
+                    if (bestscore > databaseScore){
+                        setUserBestScore(thisuid,bestscore);
+                        userScoreText.setText(String.valueOf(bestscore));
+                    }else{
+                        userScoreText.setText(String.valueOf(scoreData.getValue()));
+                    }
+
                 }
             });
 
-
+//            int thisScore = DatabaseCRUD.getUserBestScore(thisuid);
+//            DatabaseCRUD.getUserBestScore(thisuid).addOnCompleteListener(new OnCompleteListener() {
+//                @Override
+//                public void onComplete(@NonNull Task task) {
+//                    DataSnapshot scoreData = (DataSnapshot) task.getResult();
+//                    Log.i("最好成绩：", scoreData.getValue().toString());
+//                    userScoreText.setText(String.valueOf(scoreData.getValue()));
+//                }
+//            });
         }
 
     }
