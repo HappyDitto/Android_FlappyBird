@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -82,8 +83,8 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
                                 Toast.makeText(LoginRegisterHomeActivity.this, "Registered and Profile Updated Successfully, You can now Login", Toast.LENGTH_SHORT).show();
                         }
                     });
-
-                    addUser(LoginRegisterHomeActivity.this, new User(authInLogReg.getCurrentUser().getUid(),authInLogReg.getCurrentUser().getDisplayName(), authInLogReg.getCurrentUser().getPhotoUrl()));
+                    Log.i("创建账户信息：","昵称："+authInLogReg.getCurrentUser().getDisplayName());
+                    addUser(LoginRegisterHomeActivity.this, new User(authInLogReg.getCurrentUser().getUid(),authInLogReg.getCurrentUser().getDisplayName()));
                 }else {
                     Toast.makeText(LoginRegisterHomeActivity.this, "Failed Registering", Toast.LENGTH_SHORT).show();
                 }

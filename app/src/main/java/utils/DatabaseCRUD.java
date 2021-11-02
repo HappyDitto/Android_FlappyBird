@@ -37,16 +37,6 @@ public  class DatabaseCRUD {
 
     public static void addUser(final Activity aca, final User user){
         dbRef.child("Users").child(user.getuId()).setValue(user);
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if(task.isSuccessful()){
-//                    Utils.toast(aca,"Account Created Successfully!!");
-//                }else{
-//                    Utils.toast(aca,"Failed");
-//                }
-//            }
-//        });
     }
 
     public static Task getUserBestScore(String uId){

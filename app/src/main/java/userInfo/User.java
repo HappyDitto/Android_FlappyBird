@@ -3,22 +3,22 @@ package userInfo;
 import android.net.Uri;
 
 import java.io.Serializable;
+import java.net.URI;
 
 public class User implements Serializable {
     private String uId;
     private int bestScore;
     private String location;
     private String uName;
-    private Uri photoURL;
     public User() {
     }
 
-    public User(String uId, String uName, Uri photoURL) {
+    public User(String uId, String uName) {
         this.uId = uId;
         this.bestScore = 0;
         this.location = "Melbourne";
-        this.uName = uName;
-        this.photoURL = photoURL;
+        if(uName!=null) this.uName = uName;
+        else this.uName = "Default Name";
     }
 
     public String getuName() {
@@ -27,14 +27,6 @@ public class User implements Serializable {
 
     public void setuName(String uName) {
         this.uName = uName;
-    }
-
-    public Uri getPhotoURL() {
-        return photoURL;
-    }
-
-    public void setPhotoURL(Uri photoURL) {
-        this.photoURL = photoURL;
     }
 
     public String getLocation() {
@@ -68,7 +60,6 @@ public class User implements Serializable {
                 ", bestScore=" + bestScore +
                 ", location='" + location + '\'' +
                 ", uName='" + uName + '\'' +
-                ", photoURL=" + photoURL +
                 '}';
     }
 }
