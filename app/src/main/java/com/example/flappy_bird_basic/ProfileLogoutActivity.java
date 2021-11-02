@@ -9,10 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+import static com.example.flappy_bird_basic.MainActivity.bestscore;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import utils.DatabaseCRUD;
 
 public class ProfileLogoutActivity extends AppCompatActivity {
     private static FirebaseAuth authInProfile;
@@ -20,6 +24,8 @@ public class ProfileLogoutActivity extends AppCompatActivity {
     private EditText usernameProfileSetup;
     private Button updateProfileBtn;
     private Button logoutBtn;
+    private TextView userScoreText;
+
 
     public static void setUpAuth(FirebaseAuth authInMain) {
         authInProfile=authInMain;
@@ -34,7 +40,7 @@ public class ProfileLogoutActivity extends AppCompatActivity {
         usernameProfileSetup=(EditText) findViewById(R.id.username_profile_setup);
         updateProfileBtn=(Button) findViewById(R.id.update_profile_btn);
         logoutBtn=(Button) findViewById(R.id.logout_btn);
-
+        userScoreText=(TextView) findViewById(R.id.userScore);
 
         profileSetupEntry();
     }
@@ -49,6 +55,13 @@ public class ProfileLogoutActivity extends AppCompatActivity {
             Uri photoUrl = user.getPhotoUrl();
             profileImage.setImageURI(photoUrl);  //read from local, need more work
             usernameProfileSetup.setText(name);  //read from remote
+
+            //zpy update score part
+            String thisuid = user.getUid();
+            int thisScore = 0;
+            thisScore = DatabaseCRUD.getUserBestScore(thisuid);
+            userScoreText.setText(String.valueOf(2222));
+//            userScoreText.setText(String.valueOf(thisScore));
 
         }
     }
@@ -71,9 +84,22 @@ public class ProfileLogoutActivity extends AppCompatActivity {
     }
 
     public void updateProfileEntry(View view) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+
+            //zpy update score part
+            String thisuid = user.getUid();
+            DatabaseCRUD.setUserBestScore(thisuid,bestscore);
+            int thisScore = DatabaseCRUD.getUserBestScore(thisuid);
+            userScoreText.setText(String.valueOf(thisScore));
+
+        }
+
     }
 
+    public void setUpProfileImage(View view) {
 
+    }
 // possible implementation
 
 //    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
