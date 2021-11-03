@@ -14,7 +14,15 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:onClick="goStart"
-        android:text="Start Game" />
+        android:text="Start Solo Game" />
+
+    <Button
+        android:id="@+id/startPlayWithAI"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/startDirectlyBtn"
+        android:onClick="goPlayWithAI"
+        android:text="Play with Computer Players" />
 
     <Button
         android:id="@+id/goLoginBtn"

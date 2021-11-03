@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 
 import android.app.Activity;
 import android.app.Service;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -65,6 +66,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         playDirectlyBtn = findViewById(R.id.startDirectlyBtn);
         loginBtn = findViewById(R.id.goLoginBtn);
 
+        bestscore = getIntInfo("best_score");
     }
 
     /***
@@ -105,7 +107,14 @@ public class MainActivity extends Activity implements SensorEventListener {
     public void goStart(View view){
 //        Intent intent = new Intent(this, StartGame.class);
         Intent intent = new Intent(this, StartPlayWithAI.class);
+        intent.putExtra("Mode", StartPlayWithAI.SOLO_MODE);
 //        Intent intent = new Intent(this, StartTrain.class);
+        startActivity(intent);
+    }
+
+    public void goPlayWithAI(View view){
+        Intent intent = new Intent(this, StartPlayWithAI.class);
+        intent.putExtra("Mode", StartPlayWithAI.AI_MODE);
         startActivity(intent);
     }
 
@@ -162,5 +171,10 @@ public class MainActivity extends Activity implements SensorEventListener {
         }else {
             Toast.makeText(MainActivity.this, "Login to check your profile", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public int getIntInfo(String key) {
+        SharedPreferences userInfo = getSharedPreferences("BEST_SCORE", MODE_PRIVATE);
+        return userInfo.getInt(key, 0);
     }
 }
