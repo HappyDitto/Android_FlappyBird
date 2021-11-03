@@ -5,17 +5,36 @@
 #### Game functions:
 
 - Bird can sense touching screen actions to jump
+
 - Bird who last longer can have a higher score
+
 - Background would change every 10 scores
+
 - When Bird touches ground or left behand left boundary, game ends
+
+  
+
+#### Touch sensor:
+
+- upon touching the screen, bird would jump to avoid pipes
+- The strength of jumping would be adjusted by light
+
+
 
 #### Light sensor:
 
 - Bird can sense the light at the beginning of the game
+
 - With stronger the light, the bird will have a stronger ability to jump
+
 - Game start page will indicate the current light intensity and bird jump ability
 
+  
+
 #### Database:
+
+- login system
+- register system
 
 
 
