@@ -183,13 +183,6 @@ public class GameView extends View {
                     birdX = tubeX[i] - birds[0].getWidth();
                 }
 
-                // bottom tube bounce back conditions
-                if (birdY + birds[0].getHeight()/2 > bottomtubeY &&
-                        (tubeX[i] < birdX + birds[0].getWidth()/2) &&
-                        (birdX + birds[0].getWidth()/2)< tubeX[i] + toptube.getWidth()){
-                    birdX = tubeX[i] - birds[0].getWidth();
-                }
-
                 // add score to the background
                 Paint paint = new Paint();
                 paint.setColor(Color.BLACK);
