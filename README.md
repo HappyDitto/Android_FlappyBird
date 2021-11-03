@@ -14,6 +14,13 @@
 
   
 
+#### Touch sensor:
+
+- upon touching the screen, bird would jump to avoid pipes
+- The strength of jumping would be adjusted by light
+
+
+
 #### Light sensor:
 
 - Bird can sense the light at the beginning of the game
