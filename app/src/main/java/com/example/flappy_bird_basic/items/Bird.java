@@ -13,6 +13,7 @@ public class Bird {
     protected int currentFrameIndex;
     protected int score;
     protected ArrayList<Integer> passedTubes;
+    protected boolean isDead;
 
     public Bird(Bitmap[] shape, int x, int y) {
         this.shape = shape;
@@ -68,4 +69,12 @@ public class Bird {
     }
 
     public ArrayList<Integer> getPassedTube() {return passedTubes;}
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setIsDead(boolean dead) {
+        isDead = dead;
+    }
 }

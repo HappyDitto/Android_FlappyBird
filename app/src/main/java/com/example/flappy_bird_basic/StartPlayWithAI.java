@@ -26,14 +26,11 @@ public class StartPlayWithAI extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_game);
-        Utils.toast(this.getApplicationContext(), "aaaa");
     }
 
     public void startGame(View view){
         gameView = new PlayWithAIView(this);
         setContentView(gameView);
-
-        onescore = 0;
 
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
@@ -43,7 +40,7 @@ public class StartPlayWithAI extends Activity {
                 handler.post(() -> {
                     gameView.invalidate();
 
-                    if (!PlayWithAIView.gameState && !hasDied) // if user dies
+                    if (!gameView.gameState && !hasDied) // if user dies
                     {
 
                         Intent intent=new Intent(StartPlayWithAI.this, result.class);// show results screen

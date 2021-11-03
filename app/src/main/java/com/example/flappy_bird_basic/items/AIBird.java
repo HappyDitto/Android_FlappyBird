@@ -2,11 +2,12 @@ package com.example.flappy_bird_basic.items;
 
 import android.graphics.Bitmap;
 
+import java.util.Random;
+
 public class AIBird extends Bird{
 
     private LEVEL level;
     private Chromosome chromosome;
-    private boolean isDead;
     private int travelDistance;
 
     public AIBird(Bitmap[] shape, int x, int y) {
@@ -49,6 +50,34 @@ public class AIBird extends Bird{
                 break;
         }
 
+        this.chromosome = new Chromosome(
+                        163,
+                        -0.20236066354063453,
+                        -0.9624847017030345,
+                        -0.042926623574742306);
+        addChromosomeNoise();
+    }
+
+    public void addChromosomeNoise() {
+        Random random = new Random();
+
+        switch (level) {
+            case HARD:
+                chromosome.setThreshold(chromosome.getThreshold() - 10 + random.nextInt(20));
+                chromosome.setWeight1(chromosome.getWeight1() - 0.1 + random.nextFloat() * 0.2);
+                chromosome.setWeight1(chromosome.getWeight2() - 0.1 + random.nextFloat() * 0.2);
+                chromosome.setWeight1(chromosome.getWeight3() - 0.1 + random.nextFloat() * 0.2);
+            case NORMAL:
+                chromosome.setThreshold(chromosome.getThreshold() - 50 + random.nextInt(100));
+                chromosome.setWeight1(chromosome.getWeight1() - 0.3 + random.nextFloat() * 0.6);
+                chromosome.setWeight1(chromosome.getWeight2() - 0.3 + random.nextFloat() * 0.6);
+                chromosome.setWeight1(chromosome.getWeight3() - 0.3 + random.nextFloat() * 0.6);
+            case EASY:
+                chromosome.setThreshold(chromosome.getThreshold() - 100 + random.nextInt(200));
+                chromosome.setWeight1(chromosome.getWeight1() - 0.5 + random.nextFloat());
+                chromosome.setWeight1(chromosome.getWeight2() - 0.5 + random.nextFloat());
+                chromosome.setWeight1(chromosome.getWeight3() - 0.5 + random.nextFloat());
+        }
     }
 
     public void doAction(int farFromTube, int heightFromTop, int heightFromBot) {
@@ -69,10 +98,6 @@ public class AIBird extends Bird{
         this.y = respawnY;
         this.passedTubes.clear();
     }
-
-    public boolean isDead() {return isDead;}
-
-    public void setIsDead(boolean dead) {this.isDead = dead;}
 
     public Chromosome getChromosome() { return chromosome; }
 
