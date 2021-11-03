@@ -14,6 +14,10 @@
 
   
 
+#### AI Birds: 
+
+
+
 #### Touch sensor:
 
 - upon touching the screen, bird would jump to avoid pipes
