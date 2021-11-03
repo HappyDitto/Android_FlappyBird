@@ -3,10 +3,12 @@ package utils;
 import static utils.Utils.getFirebaseRef;
 
 import android.app.Activity;
+import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -19,54 +21,48 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.List;
 
 import userInfo.User;
 
 public  class DatabaseCRUD {
     private static DatabaseReference dbRef = getFirebaseRef();
-    public static void addUser(final Activity aca, final User user){
-        dbRef.child("Users").child(user.getuId()).setValue(user);
-//                .addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if(task.isSuccessful()){
-//                    Utils.toast(aca,"Account Created Successfully!!");
-//                }else{
-//                    Utils.toast(aca,"Failed");
-//                }
-//            }
-//        });
+    private List<User> topUserList = new ArrayList<>();
+    public DatabaseCRUD() {
+
     }
 
-    public static int getUserBestScore(String uId){
-        int[] res = {0};
-        dbRef.child("Users").child(uId).child("bestScore").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                Log.i("check best score：", String.valueOf(task.getResult().getValue()));
-                res[0] =  Integer.parseInt(String.valueOf(task.getResult().getValue()));
-            }
-        });;
-        return res[0];
+    public interface DataStatus{
+        void TopScoreUserListIsLoaded(List<User> topUserList);
+    }
+
+    public static void addUser(final Activity aca, final User user){
+        dbRef.child("Users").child(user.getuId()).setValue(user);
+    }
+
+    public static Task getUserBestScore(String uId){
+        return dbRef.child("Users").child(uId).child("bestScore").get();
     }
 
     public static void setUserBestScore(String uId, int score){
         dbRef.child("Users").child(uId).child("bestScore").setValue(score);
     }
 
-    public static void getTopScoreUsers(int topN){
+    public void getTopScoreUsers(final DataStatus ds, int topN){
         Query bestScoreUsers = dbRef.child("Users").orderByChild("bestScore").limitToLast(topN);
         bestScoreUsers.addValueEventListener(new ValueEventListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<User> res = new ArrayList<User>();
+                topUserList.clear();
                 for (DataSnapshot item  : snapshot.getChildren()) {
-//                    Log.i("看看信息：",snapshot.getValue().toString());
                     User user = item.getValue(User.class);
-                    Log.i("看看信息1：",user.toString());
-                    res.add(user);
+                    topUserList.add(user);
+                    Log.i("看看信息1：",topUserList.toString());
                 }
+                topUserList.sort(Comparator.comparing(User::getBestScore).reversed());
+                ds.TopScoreUserListIsLoaded(topUserList);
             }
 
             @Override

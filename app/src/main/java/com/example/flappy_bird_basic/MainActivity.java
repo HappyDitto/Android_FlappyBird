@@ -17,12 +17,14 @@ import android.view.View;
 import android.content.Intent;
 import android.widget.Button;
 import android.widget.TextView;
-import android.speech.RecognizerIntent;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
 import java.util.Locale;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,6 +34,7 @@ import userInfo.User;
 public class MainActivity extends Activity implements SensorEventListener {
     private Button playDirectlyBtn;
     private Button loginBtn;
+    private FirebaseAuth authInMain;
 
     // define variable for light sensors
     TextView textView;
@@ -47,6 +50,11 @@ public class MainActivity extends Activity implements SensorEventListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        authInMain=FirebaseAuth.getInstance();
+        LoginRegisterHomeActivity.setUpAuth(authInMain);
+        ProfileLogoutActivity.setUpAuth(authInMain);
+
 
         // light sensor
         textView = (TextView) findViewById(R.id.textView);
@@ -96,8 +104,8 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     public void goStart(View view){
 //        Intent intent = new Intent(this, StartGame.class);
-//        Intent intent = new Intent(this, StartPlayWithAI.class);
-        Intent intent = new Intent(this, StartTrain.class);
+        Intent intent = new Intent(this, StartPlayWithAI.class);
+//        Intent intent = new Intent(this, StartTrain.class);
         startActivity(intent);
     }
 
@@ -127,14 +135,32 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     //possible discard of button
     public void accountLoginRegister(View view) {
+//        ((Button)findViewById(R.id.goLoginBtn)).setEnabled(false);
         Intent intentForLoginRegister= new Intent(this,LoginRegisterHomeActivity.class);
         startActivity(intentForLoginRegister);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currUser= authInMain.getCurrentUser();
+        if(currUser != null){
+            ((Button) findViewById(R.id.goLoginBtn)).setEnabled(false);
+            ((Button) findViewById(R.id.goLoginBtn)).setVisibility(View.GONE);
+        }
     }
 
 
     // change to graphical account entry
     public void userAccountEntry(View view) {
         //need logic for login register and user profile
-        startActivity(new Intent(MainActivity.this,ProfileLogoutActivity.class));
+        FirebaseUser currUser= authInMain.getCurrentUser();
+        if (currUser!=null) {
+            startActivity(new Intent(MainActivity.this,ProfileLogoutActivity.class));
+        }else {
+            Toast.makeText(MainActivity.this, "Login to check your profile", Toast.LENGTH_SHORT).show();
+        }
     }
 }
