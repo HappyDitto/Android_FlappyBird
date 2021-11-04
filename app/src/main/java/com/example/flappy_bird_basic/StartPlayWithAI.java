@@ -69,7 +69,7 @@ public class StartPlayWithAI extends Activity {
                                 @Override
                                 public void onComplete(@NonNull Task task) {
                                     DataSnapshot scoreData = (DataSnapshot) task.getResult();
-                                    Log.i("最好成绩：", scoreData.getValue().toString());
+                                    Log.i("best score：", scoreData.getValue().toString());
                                     databaseScore = new Long((Long) scoreData.getValue()).intValue();
                                     if (bestscore > databaseScore) {
                                         setUserBestScore(thisuid, bestscore);
