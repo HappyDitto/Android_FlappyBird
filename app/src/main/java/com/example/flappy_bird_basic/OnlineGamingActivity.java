@@ -14,14 +14,4 @@ public class OnlineGamingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_online_gaming);
     }
-
-//    public void logoutExit(View view) {
-//        //logout logic here
-//        Toast.makeText(this,"Successfully Logout",Toast.LENGTH_LONG);
-//        startActivity(new Intent(this,MainActivity.class));
-//    }
-
-//    public void profileLogoutEntry(View view) {
-//        startActivity(new Intent(OnlineGamingActivity.this,ProfileLogoutActivity.class));
-//    }
 }
