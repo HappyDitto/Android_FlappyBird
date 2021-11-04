@@ -3,8 +3,10 @@ package com.example.flappy_bird_basic;
 import static utils.DatabaseCRUD.addUser;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +34,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
     private EditText passwordField;
     private EditText usernameField;
     private Button loginBtn;
+    private TextView resetPasswordBtn;
     private static FirebaseAuth authInLogReg;
 
 
@@ -42,6 +46,8 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         passwordField =(EditText) findViewById(R.id.password_field);
         usernameField=(EditText) findViewById(R.id.username_field);
         loginBtn=(Button) findViewById(R.id.login_btn);
+        resetPasswordBtn=(TextView) findViewById(R.id.reset_password_btn);
+
 //        authInLogReg = FirebaseAuth.getInstance();//possible discard
 
     }
@@ -116,6 +122,51 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(LoginRegisterHomeActivity.this, "Failed Login, register or check your credentials", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void resetPasswordEntry(View view) {
+
+
+        AlertDialog.Builder resetDial = new AlertDialog.Builder(view.getContext());
+        resetDial.setTitle("Forget Your Password?");
+        resetDial.setMessage("Reset Via Your Email: ");
+        EditText emailForResetPassword= new EditText(view.getContext());
+        resetDial.setView(emailForResetPassword);
+
+        resetDial.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //logic for cancel
+            }
+        });
+        resetDial.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String resetEmail= emailForResetPassword.getText().toString();
+                if (TextUtils.isEmpty(resetEmail)) {
+                    Toast.makeText(LoginRegisterHomeActivity.this, "Please Enter Valid Email", Toast.LENGTH_LONG).show();
+                }else{
+                    resetPassword(resetEmail);
+                }
+            }
+        });
+
+        resetDial.show();
+
+    }
+
+    private void resetPassword(String resetEmail) {
+        authInLogReg.sendPasswordResetEmail(resetEmail).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(LoginRegisterHomeActivity.this, "Check email to reset password", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(LoginRegisterHomeActivity.this, "Something goes wrong sending reset email", Toast.LENGTH_LONG).show();
             }
         });
     }
