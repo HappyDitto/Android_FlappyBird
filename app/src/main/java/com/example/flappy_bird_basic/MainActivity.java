@@ -131,12 +131,12 @@ public class MainActivity extends Activity implements SensorEventListener {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String value = dataSnapshot.getValue(String.class);
-                Log.i("监听到变化:", value);
+                Log.i("monitor change:", value);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("监听到错误:", error.toException().toString());
+                Log.e("monitor error:", error.toException().toString());
             }
         });
 
