@@ -89,18 +89,9 @@ public class    ProfileLogoutActivity extends AppCompatActivity {
 // asynchronous need to be solved
     public void logoutEntry(View view) {
         FirebaseUser currentUser = authInProfile.getCurrentUser();
-        if(currentUser != null){
-            Toast.makeText(ProfileLogoutActivity.this, "User Logined", Toast.LENGTH_SHORT).show();
-        }
         authInProfile.signOut();
-        if(currentUser != null){
-            Toast.makeText(ProfileLogoutActivity.this, "Logout failed", Toast.LENGTH_SHORT).show();
-
-        }
-        else {
-            Toast.makeText(ProfileLogoutActivity.this, "logout after", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(ProfileLogoutActivity.this,MainActivity.class));
-        }
+        Toast.makeText(ProfileLogoutActivity.this, "You have logged out", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(ProfileLogoutActivity.this,MainActivity.class));
     }
 
     public void updateProfileEntry(View view) {
