@@ -70,7 +70,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     }
 
     /***
-     * Implementation for light sensors
+     * Light Sensor implementation section
      */
 
     @Override
@@ -105,10 +105,8 @@ public class MainActivity extends Activity implements SensorEventListener {
      */
 
     public void goStart(View view){
-//        Intent intent = new Intent(this, StartGame.class);
         Intent intent = new Intent(this, StartPlayWithAI.class);
         intent.putExtra("Mode", StartPlayWithAI.SOLO_MODE);
-//        Intent intent = new Intent(this, StartTrain.class);
         startActivity(intent);
     }
 

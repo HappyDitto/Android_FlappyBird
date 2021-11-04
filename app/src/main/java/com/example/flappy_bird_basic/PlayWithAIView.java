@@ -161,7 +161,9 @@ public class PlayWithAIView extends View {
         // draw the background on canvas
         canvas.drawBitmap(background,null, rect, null);
 
-        // this is where background changes
+        /***
+         * Background changing mechanism
+         */
         if(player.getScore() - preScore > 10){
             canvas.drawBitmap(background_night,null, rect, null);
         }
