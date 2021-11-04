@@ -27,11 +27,13 @@ public class RecyclerViewConfig {
     class UserItemView extends RecyclerView.ViewHolder {
         private TextView userName;
         private TextView userBestScore;
+        private TextView userLocation;
         public UserItemView(ViewGroup parent){
             super(LayoutInflater.from(ctx).inflate(R.layout.best_user_item,parent,false));
 
             userName = (TextView) itemView.findViewById(R.id.user_name);
             userBestScore = (TextView) itemView.findViewById(R.id.user_best_score);
+            userLocation = (TextView) itemView.findViewById(R.id.user_location);
         }
 
         public void bind(User user){
@@ -41,6 +43,9 @@ public class RecyclerViewConfig {
             userBestScore.setText(String.valueOf(user.getBestScore()));
             userBestScore.setTextColor(Color.parseColor("#f7fafa"));
             userBestScore.setTextSize(24);
+            userLocation.setText(String.valueOf(user.getLocation()));
+            userLocation.setTextColor(Color.parseColor("#f7fafa"));
+            userLocation.setTextSize(24);
         }
     }
 

@@ -59,7 +59,6 @@ public  class DatabaseCRUD {
                 for (DataSnapshot item  : snapshot.getChildren()) {
                     User user = item.getValue(User.class);
                     topUserList.add(user);
-                    Log.i("看看信息1：",topUserList.toString());
                 }
                 topUserList.sort(Comparator.comparing(User::getBestScore).reversed());
                 ds.TopScoreUserListIsLoaded(topUserList);
