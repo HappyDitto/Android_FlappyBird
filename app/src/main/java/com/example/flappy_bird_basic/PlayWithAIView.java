@@ -1,6 +1,7 @@
 package com.example.flappy_bird_basic;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -18,12 +19,13 @@ import java.util.ArrayList;
 import java.util.Random;
 import static com.example.flappy_bird_basic.MainActivity.bestscore;
 import static com.example.flappy_bird_basic.StartPlayWithAI.onescore;
+import static com.example.flappy_bird_basic.StartPlayWithAI.rank;
 
 import com.example.flappy_bird_basic.items.AIBird;
 import com.example.flappy_bird_basic.items.Bird;
 import com.example.flappy_bird_basic.items.Tube;
 
-import org.checkerframework.checker.units.qual.A;
+//import org.checkerframework.checker.units.qual.A;
 
 import utils.InGameUtils;
 import utils.Utils;
@@ -71,7 +73,7 @@ public class PlayWithAIView extends View {
 
     boolean createNew;
 
-    public PlayWithAIView(Context context) {
+    public PlayWithAIView(Context context, int mode) {
         super(context);
 
         tubes = new ArrayList<>();
@@ -109,24 +111,26 @@ public class PlayWithAIView extends View {
             createNewTube();
         }
 
-        Bitmap[] botBirds = new Bitmap[2];
-        botBirds[0] = BitmapFactory.decodeResource(getResources(),R.drawable.bird_bot_1);
-        botBirds[1] = BitmapFactory.decodeResource(getResources(),R.drawable.bird_bot_2);
+        if (mode == StartPlayWithAI.AI_MODE) {
+            Bitmap[] botBirds = new Bitmap[2];
+            botBirds[0] = BitmapFactory.decodeResource(getResources(), R.drawable.bird_bot_1);
+            botBirds[1] = BitmapFactory.decodeResource(getResources(), R.drawable.bird_bot_2);
 
-        for (int i = 0; i<EASY_BOT_NUM; i++) {
-            AIBird bot = new AIBird(botBirds, dWidth/2 - botBirds[0].getWidth()/2,
-                    dHeight/2 - botBirds[0].getHeight()/2, AIBird.LEVEL.EASY);
-            allBirds.add(bot);
-        }
-        for (int i = 0; i<NORMAL_BOT_NUM; i++) {
-            AIBird bot = new AIBird(botBirds, dWidth/2 - botBirds[0].getWidth()/2,
-                    dHeight/2 - botBirds[0].getHeight()/2, AIBird.LEVEL.NORMAL);
-            allBirds.add(bot);
-        }
-        for (int i = 0; i<HARD_BOT_NUM; i++) {
-            AIBird bot = new AIBird(botBirds, dWidth/2 - botBirds[0].getWidth()/2,
-                    dHeight/2 - botBirds[0].getHeight()/2, AIBird.LEVEL.HARD);
-            allBirds.add(bot);
+            for (int i = 0; i < EASY_BOT_NUM; i++) {
+                AIBird bot = new AIBird(botBirds, dWidth / 2 - botBirds[0].getWidth() / 2,
+                        dHeight / 2 - botBirds[0].getHeight() / 2, AIBird.LEVEL.EASY);
+                allBirds.add(bot);
+            }
+            for (int i = 0; i < NORMAL_BOT_NUM; i++) {
+                AIBird bot = new AIBird(botBirds, dWidth / 2 - botBirds[0].getWidth() / 2,
+                        dHeight / 2 - botBirds[0].getHeight() / 2, AIBird.LEVEL.NORMAL);
+                allBirds.add(bot);
+            }
+            for (int i = 0; i < HARD_BOT_NUM; i++) {
+                AIBird bot = new AIBird(botBirds, dWidth / 2 - botBirds[0].getWidth() / 2,
+                        dHeight / 2 - botBirds[0].getHeight() / 2, AIBird.LEVEL.HARD);
+                allBirds.add(bot);
+            }
         }
 
         Bitmap[] birds = new Bitmap[2];
@@ -212,8 +216,24 @@ public class PlayWithAIView extends View {
                             bird.getY() < -bird.getCurrentFrame(false).getHeight() ||
                             bird.getY() >= dHeight) {
                         bird.setIsDead(true);
-                        if (!(bird instanceof AIBird))
+                        if (!(bird instanceof AIBird)) {
                             gameState = false;
+
+                            onescore = player.getScore();
+
+                            rank = 1;
+                            for (Bird temp: allBirds) {
+                                if (!temp.isDead()) {
+                                    rank += 1;
+                                }
+                            }
+
+                            //add bestscore
+                            if(onescore > bestscore){
+                                saveInfo("best_score", onescore);
+                                bestscore = onescore;
+                            }
+                        }
                     }
 
 
@@ -232,9 +252,6 @@ public class PlayWithAIView extends View {
             paint.setColor(Color.BLACK);
             paint.setTextSize(60);
             canvas.drawText("Score: " + player.getScore(), dWidth - 300, 50, paint);
-            if (player.getScore() > onescore) {
-                onescore = player.getScore();
-            }
         }
 
         else{
@@ -242,14 +259,14 @@ public class PlayWithAIView extends View {
             int endY = dHeight/2 - over_pic.getHeight()/2;
 
             canvas.drawBitmap(over_pic, endX, endY, null);
-
-            onescore = player.getScore();
-            //add bestscore
-            if(onescore > bestscore){
-                bestscore = onescore;
-            }
         }
+    }
 
+    public void saveInfo(String key, int value) {
+        SharedPreferences userInfo = getContext().getSharedPreferences("BEST_SCORE", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = userInfo.edit();
+        editor.putInt(key, value);
+        editor.commit();
     }
 
     // get the touch event

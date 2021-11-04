@@ -12,6 +12,7 @@ import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class result extends AppCompatActivity {
@@ -28,7 +29,8 @@ public class result extends AppCompatActivity {
 //        int bestscore = reintent.getIntExtra("bestscore", 0);
 
         TextView RefreshTextObject = (TextView) findViewById(R.id.scoretext);
-        RefreshTextObject.setText(String.valueOf(onescore));
+        int score = getIntent().getIntExtra("score", 0);
+        RefreshTextObject.setText(String.valueOf(score));
         TextView RefreshbestTextObject = (TextView) findViewById(R.id.bestscoretext);
         RefreshbestTextObject.setText(String.valueOf(bestscore));
 
@@ -41,13 +43,27 @@ public class result extends AppCompatActivity {
         browser.setBackgroundColor(Color.argb(0, 0, 0, 0));
         WebSettings settings = browser.getSettings();
         settings.setTextZoom(115);
-        browser.loadUrl("http://numbersapi.com/" + onescore);
+        browser.loadUrl("http://numbersapi.com/" + score);
+
+        ImageView medal = findViewById(R.id.medal0);
+        int rank = getIntent().getIntExtra("rank", 1);
+        switch(rank) {
+            case 1:
+                medal.setImageDrawable(getDrawable(R.drawable.medals_0));
+            case 2:
+                medal.setImageDrawable(getDrawable(R.drawable.medals_1));
+            case 3:
+                medal.setImageDrawable(getDrawable(R.drawable.medals_2));
+            case 4:
+                medal.setImageDrawable(getDrawable(R.drawable.medals_3));
+        }
 
         button = (ImageButton) findViewById(R.id.startbutton);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openMainActivity();
+//                openMainActivity();
+                finish();
             }
         });
 

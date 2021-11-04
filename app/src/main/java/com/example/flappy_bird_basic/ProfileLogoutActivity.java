@@ -32,7 +32,7 @@ public class ProfileLogoutActivity extends AppCompatActivity {
     private Button updateProfileBtn;
     private Button logoutBtn;
     private TextView userScoreText;
-    private int databaseScore = 0;
+//    private int databaseScore = 0;
 
 
     public static void setUpAuth(FirebaseAuth authInMain) {
@@ -103,34 +103,25 @@ public class ProfileLogoutActivity extends AppCompatActivity {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
 
-            //zpy update score part
-            String thisuid = user.getUid();
-
-            DatabaseCRUD.getUserBestScore(thisuid).addOnCompleteListener(new OnCompleteListener() {
-                @Override
-                public void onComplete(@NonNull Task task) {
-                    DataSnapshot scoreData = (DataSnapshot) task.getResult();
-                    Log.i("最好成绩：", scoreData.getValue().toString());
-                    databaseScore = new Long((Long) scoreData.getValue()).intValue();
-                    if (bestscore > databaseScore){
-                        setUserBestScore(thisuid,bestscore);
-                        userScoreText.setText(String.valueOf(bestscore));
-                    }else{
-                        userScoreText.setText(String.valueOf(scoreData.getValue()));
-                    }
-
-                }
-            });
-
-//            int thisScore = DatabaseCRUD.getUserBestScore(thisuid);
+//            //zpy update score part
+//            String thisuid = user.getUid();
+//
 //            DatabaseCRUD.getUserBestScore(thisuid).addOnCompleteListener(new OnCompleteListener() {
 //                @Override
 //                public void onComplete(@NonNull Task task) {
 //                    DataSnapshot scoreData = (DataSnapshot) task.getResult();
 //                    Log.i("最好成绩：", scoreData.getValue().toString());
-//                    userScoreText.setText(String.valueOf(scoreData.getValue()));
+//                    databaseScore = new Long((Long) scoreData.getValue()).intValue();
+//                    if (bestscore > databaseScore){
+//                        setUserBestScore(thisuid,bestscore);
+//                        userScoreText.setText(String.valueOf(bestscore));
+//                    }else{
+//                        userScoreText.setText(String.valueOf(scoreData.getValue()));
+//                    }
+//
 //                }
 //            });
+
         }
 
     }
