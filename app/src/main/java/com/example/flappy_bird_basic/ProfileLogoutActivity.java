@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,14 +19,17 @@ import static com.example.flappy_bird_basic.MainActivity.bestscore;
 import static utils.DatabaseCRUD.setUserBestScore;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 
 import utils.DatabaseCRUD;
 
-public class ProfileLogoutActivity extends AppCompatActivity {
+public class    ProfileLogoutActivity extends AppCompatActivity {
     private static FirebaseAuth authInProfile;
     private ImageView profileImage;
     private EditText usernameProfileSetup;
@@ -100,29 +104,33 @@ public class ProfileLogoutActivity extends AppCompatActivity {
     }
 
     public void updateProfileEntry(View view) {
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
 
-//            //zpy update score part
-//            String thisuid = user.getUid();
-//
-//            DatabaseCRUD.getUserBestScore(thisuid).addOnCompleteListener(new OnCompleteListener() {
-//                @Override
-//                public void onComplete(@NonNull Task task) {
-//                    DataSnapshot scoreData = (DataSnapshot) task.getResult();
-//                    Log.i("最好成绩：", scoreData.getValue().toString());
-//                    databaseScore = new Long((Long) scoreData.getValue()).intValue();
-//                    if (bestscore > databaseScore){
-//                        setUserBestScore(thisuid,bestscore);
-//                        userScoreText.setText(String.valueOf(bestscore));
-//                    }else{
-//                        userScoreText.setText(String.valueOf(scoreData.getValue()));
-//                    }
-//
-//                }
-//            });
-
+        String userNameUpdateInput= usernameProfileSetup.getText().toString();
+        if (TextUtils.isEmpty(userNameUpdateInput)) {
+            Toast.makeText(ProfileLogoutActivity.this, "Username can't be empty", Toast.LENGTH_SHORT).show();
+        }else {
+            setUpProfileUserName(userNameUpdateInput);
         }
+
+
+    }
+
+    private void setUpProfileUserName(String userNameUpdateInput) {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        UserProfileChangeRequest profileUpdateUserName= new UserProfileChangeRequest.Builder()
+                .setDisplayName(userNameUpdateInput)
+                .build();
+        user.updateProfile(profileUpdateUserName).addOnSuccessListener(this, new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+                Toast.makeText(ProfileLogoutActivity.this, "Username Updated Successfully", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(ProfileLogoutActivity.this, "Failed Update of Username", Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 
