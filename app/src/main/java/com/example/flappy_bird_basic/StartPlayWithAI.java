@@ -1,16 +1,28 @@
 package com.example.flappy_bird_basic;
 
+import static com.example.flappy_bird_basic.MainActivity.bestscore;
+import static utils.DatabaseCRUD.setUserBestScore;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
+import utils.DatabaseCRUD;
 import utils.Utils;
 
 public class StartPlayWithAI extends Activity {
@@ -19,6 +31,7 @@ public class StartPlayWithAI extends Activity {
     public static int rank = 1;
     public static final int AI_MODE = 0;
     public static final int SOLO_MODE = 1;
+    private int databaseScore = 0;
 
     private PlayWithAIView gameView;
     private Handler handler = new Handler(); // handler object used for handler thread
@@ -46,6 +59,25 @@ public class StartPlayWithAI extends Activity {
 
                     if (!gameView.gameState && !hasDied) // if user dies
                     {
+                        // update score to database
+                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                        if (user != null) {
+
+                            String thisuid = user.getUid();
+
+                            DatabaseCRUD.getUserBestScore(thisuid).addOnCompleteListener(new OnCompleteListener() {
+                                @Override
+                                public void onComplete(@NonNull Task task) {
+                                    DataSnapshot scoreData = (DataSnapshot) task.getResult();
+                                    Log.i("最好成绩：", scoreData.getValue().toString());
+                                    databaseScore = new Long((Long) scoreData.getValue()).intValue();
+                                    if (bestscore > databaseScore) {
+                                        setUserBestScore(thisuid, bestscore);
+                                    }
+
+                                }
+                            });
+                        }
 
                         Intent intent=new Intent(StartPlayWithAI.this, result.class);// show results screen
                         intent.putExtra("score", onescore);
