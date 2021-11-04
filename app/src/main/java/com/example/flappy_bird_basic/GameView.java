@@ -124,7 +124,7 @@ public class GameView extends View {
         canvas.drawBitmap(background,null, rect, null);
 
         /***
-         * Light Sensor implementation section
+         * background change implementation section
          */
         if(score - preScore > 10){
             canvas.drawBitmap(background_night,null, rect, null);
