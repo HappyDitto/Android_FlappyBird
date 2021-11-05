@@ -1,22 +1,21 @@
 package userInfo;
 
-import android.net.Uri;
-
 import java.io.Serializable;
-import java.net.URI;
 
 public class User implements Serializable {
     private String uId;
     private int bestScore;
-    private String location;
+    private String location = "Melbourne, Australia";
     private String uName;
+    private String photoPath;
     public User() {
     }
 
-    public User(String uId, String uName) {
+    public User(String uId, String location, String uName, String photoPath) {
         this.uId = uId;
         this.bestScore = 0;
-        this.location = "Melbourne";
+        this.location = location;
+        this.photoPath = photoPath;
         if(uName!=null) this.uName = uName;
         else this.uName = "Default Name";
     }
