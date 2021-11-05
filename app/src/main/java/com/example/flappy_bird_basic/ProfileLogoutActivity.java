@@ -54,10 +54,16 @@ public class    ProfileLogoutActivity extends AppCompatActivity {
         logoutBtn=(Button) findViewById(R.id.logout_btn);
         userScoreText=(TextView) findViewById(R.id.userScore);
 
+    }
+
+    //change the profile setup entry to get update of best score each time user enter the profile interface
+    @Override
+    protected void onStart() {
+        super.onStart();
         profileSetupEntry();
     }
 
-
+    //firebase authentication state monitor
     private void profileSetupEntry() {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {

@@ -52,6 +52,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //firebase authentication setup
         authInMain=FirebaseAuth.getInstance();
         LoginRegisterHomeActivity.setUpAuth(authInMain);
         ProfileLogoutActivity.setUpAuth(authInMain);
@@ -140,9 +141,8 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     }
 
-    //possible discard of button
+    //must set to invisible if logged-in
     public void accountLoginRegister(View view) {
-//        ((Button)findViewById(R.id.goLoginBtn)).setEnabled(false);
         Intent intentForLoginRegister= new Intent(this,LoginRegisterHomeActivity.class);
         startActivity(intentForLoginRegister);
 
@@ -156,18 +156,21 @@ public class MainActivity extends Activity implements SensorEventListener {
         if(currUser != null){
             ((Button) findViewById(R.id.goLoginBtn)).setEnabled(false);
             ((Button) findViewById(R.id.goLoginBtn)).setVisibility(View.GONE);
+        }else {
+            ((Button) findViewById(R.id.goLoginBtn)).setEnabled(true);
+            ((Button) findViewById(R.id.goLoginBtn)).setVisibility(View.VISIBLE);
         }
     }
 
 
-    // change to graphical account entry
+    //graphical account entry after logged-in
     public void userAccountEntry(View view) {
         //need logic for login register and user profile
         FirebaseUser currUser= authInMain.getCurrentUser();
         if (currUser!=null) {
             startActivity(new Intent(MainActivity.this,ProfileLogoutActivity.class));
         }else {
-            Toast.makeText(MainActivity.this, "Login to check your profile", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Login to check your profile", Toast.LENGTH_LONG).show();
         }
     }
 

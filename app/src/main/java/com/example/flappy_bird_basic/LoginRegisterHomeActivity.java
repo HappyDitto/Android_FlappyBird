@@ -60,16 +60,14 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         String email_input=emailField.getText().toString();
         String password_input=passwordField.getText().toString();
         String username_input=usernameField.getText().toString();
-        if (TextUtils.isEmpty(email_input)||TextUtils.isEmpty(password_input)) {
-            Toast.makeText(LoginRegisterHomeActivity.this, "Empty email or password", Toast.LENGTH_SHORT).show();
+        if (email_input.isEmpty()||password_input.isEmpty()) {
+            Toast.makeText(LoginRegisterHomeActivity.this, "Empty email or password", Toast.LENGTH_LONG).show();
         }else if (password_input.length()<6) {
-            Toast.makeText(LoginRegisterHomeActivity.this, "Password too short", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginRegisterHomeActivity.this, "Password too short", Toast.LENGTH_LONG).show();
         } else {
             registerOnDemand(email_input,password_input,username_input);
         }
-        //register logic here
-
-
+// possible discard TextUtils.isEmpty(email_input)||TextUtils.isEmpty(password_input)
     }
 
     private void registerOnDemand(String email_input, String password_input, String username_input) {
