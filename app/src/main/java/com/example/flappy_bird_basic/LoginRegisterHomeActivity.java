@@ -63,7 +63,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         if (email_input.isEmpty()||password_input.isEmpty()) {
             Toast.makeText(LoginRegisterHomeActivity.this, "Empty email or password", Toast.LENGTH_LONG).show();
         }else if (password_input.length()<6) {
-            Toast.makeText(LoginRegisterHomeActivity.this, "Password too short", Toast.LENGTH_LONG).show();
+            Toast.makeText(LoginRegisterHomeActivity.this, "Password must be at least 6 characters", Toast.LENGTH_LONG).show();
         } else {
             registerOnDemand(email_input,password_input,username_input);
         }
@@ -84,13 +84,13 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful())
-                                Toast.makeText(LoginRegisterHomeActivity.this, "Registered and Profile Updated Successfully, You can now Login", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(LoginRegisterHomeActivity.this, "Registered and Profile Updated Successfully, You can now Login", Toast.LENGTH_LONG).show();
                         }
                     });
                     Log.i("创建账户信息：","昵称："+authInLogReg.getCurrentUser().getDisplayName());
                     addUser(LoginRegisterHomeActivity.this, new User(authInLogReg.getCurrentUser().getUid(),authInLogReg.getCurrentUser().getDisplayName()));
                 }else {
-                    Toast.makeText(LoginRegisterHomeActivity.this, "Failed Registering", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(LoginRegisterHomeActivity.this, "Failed Registering, Check your credentials and user name", Toast.LENGTH_LONG).show();
                 }
             }
         });
@@ -101,8 +101,8 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         //login logic here
         String email_input=emailField.getText().toString();
         String password_input=passwordField.getText().toString();
-        if (TextUtils.isEmpty(email_input)||TextUtils.isEmpty(password_input)) {
-            Toast.makeText(LoginRegisterHomeActivity.this, "Empty email or password", Toast.LENGTH_SHORT).show();
+        if (email_input.isEmpty()||password_input.isEmpty()) {
+            Toast.makeText(LoginRegisterHomeActivity.this, "Empty email or password", Toast.LENGTH_LONG).show();
         }else {
             loginOnDemand(email_input,password_input);
         }
@@ -112,14 +112,14 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         authInLogReg.signInWithEmailAndPassword(email_input,password_input).addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Logined", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Logged-in", Toast.LENGTH_LONG).show();
                 startActivity(new Intent(LoginRegisterHomeActivity.this,MainActivity.class));
                 finish();
             }
         }).addOnFailureListener(this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(LoginRegisterHomeActivity.this, "Failed Login, register or check your credentials", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginRegisterHomeActivity.this, "Failed Login, Register or check your credentials", Toast.LENGTH_LONG).show();
             }
         });
     }
@@ -143,7 +143,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 String resetEmail= emailForResetPassword.getText().toString();
-                if (TextUtils.isEmpty(resetEmail)) {
+                if (resetEmail.isEmpty()) {
                     Toast.makeText(LoginRegisterHomeActivity.this, "Please Enter Valid Email", Toast.LENGTH_LONG).show();
                 }else{
                     resetPassword(resetEmail);

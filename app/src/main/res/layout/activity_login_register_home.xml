@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#66CAD6"
     tools:context=".LoginRegisterHomeActivity">
 
     <EditText
@@ -77,7 +78,7 @@
         android:onClick="resetPasswordEntry"
         android:text="Forget Your Password ?"
         android:textAlignment="center"
-        android:textColor="@color/black"
+        android:textColor="@android:color/background_light"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -86,8 +87,8 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
+        android:layout_height="58dp"
+        android:background="@drawable/background"
         android:minHeight="?attr/actionBarSize"
         android:theme="?attr/actionBarTheme"
         app:layout_constraintEnd_toEndOf="parent"

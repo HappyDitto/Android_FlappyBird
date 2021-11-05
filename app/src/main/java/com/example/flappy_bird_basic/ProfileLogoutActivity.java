@@ -69,7 +69,7 @@ public class    ProfileLogoutActivity extends AppCompatActivity {
         if (user != null) {
             // Name, email address, and profile photo Url
             String name = user.getDisplayName();
-            String email = user.getEmail();
+//            String email = user.getEmail();
             Uri photoUrl = user.getPhotoUrl();
             profileImage.setImageURI(photoUrl);  //read from local, need more work
             usernameProfileSetup.setText(name);  //read from remote
@@ -104,7 +104,7 @@ public class    ProfileLogoutActivity extends AppCompatActivity {
     public void updateProfileEntry(View view) {
 
         String userNameUpdateInput= usernameProfileSetup.getText().toString();
-        if (TextUtils.isEmpty(userNameUpdateInput)) {
+        if (userNameUpdateInput.isEmpty()) {
             Toast.makeText(ProfileLogoutActivity.this, "Username can't be empty", Toast.LENGTH_SHORT).show();
         }else {
             setUpProfileUserName(userNameUpdateInput);
