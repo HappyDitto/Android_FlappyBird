@@ -103,7 +103,7 @@ public class    ProfileLogoutActivity extends AppCompatActivity {
 
     public void updateProfileEntry(View view) {
 
-        String userNameUpdateInput= usernameProfileSetup.getText().toString();
+        String userNameUpdateInput= usernameProfileSetup.getText().toString().replaceAll("\\s","");
         if (userNameUpdateInput.isEmpty()) {
             Toast.makeText(ProfileLogoutActivity.this, "Username can't be empty", Toast.LENGTH_SHORT).show();
         }else {
@@ -121,12 +121,12 @@ public class    ProfileLogoutActivity extends AppCompatActivity {
         user.updateProfile(profileUpdateUserName).addOnSuccessListener(this, new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void unused) {
-                Toast.makeText(ProfileLogoutActivity.this, "Username Updated Successfully", Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileLogoutActivity.this, "Username Updated Successfully", Toast.LENGTH_SHORT).show();
             }
         }).addOnFailureListener(this, new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(ProfileLogoutActivity.this, "Failed Update of Username", Toast.LENGTH_LONG).show();
+                Toast.makeText(ProfileLogoutActivity.this, "Failed Update of Username", Toast.LENGTH_SHORT).show();
             }
         });
 

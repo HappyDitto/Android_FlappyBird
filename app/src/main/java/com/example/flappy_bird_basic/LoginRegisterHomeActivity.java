@@ -48,21 +48,22 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         loginBtn=(Button) findViewById(R.id.login_btn);
         resetPasswordBtn=(TextView) findViewById(R.id.reset_password_btn);
 
-//        authInLogReg = FirebaseAuth.getInstance();//possible discard
-
     }
 
     public static void setUpAuth(FirebaseAuth authInMain) {
         authInLogReg=authInMain;
     }
 
+    // for login info verification
     public void registerEntry(View view) {
-        String email_input=emailField.getText().toString();
-        String password_input=passwordField.getText().toString();
-        String username_input=usernameField.getText().toString();
+        String email_input=emailField.getText().toString().replaceAll("\\s","");
+        String password_input=passwordField.getText().toString().replaceAll("\\s","");
+        String username_input=usernameField.getText().toString().replaceAll("\\s","");
         if (email_input.isEmpty()||password_input.isEmpty()) {
             Toast.makeText(LoginRegisterHomeActivity.this, "Empty email or password", Toast.LENGTH_LONG).show();
-        }else if (password_input.length()<6) {
+        }else if (username_input.isEmpty()) {
+            Toast.makeText(LoginRegisterHomeActivity.this, "Empty username", Toast.LENGTH_SHORT).show();
+        } else if (password_input.length()<6) {
             Toast.makeText(LoginRegisterHomeActivity.this, "Password must be at least 6 characters", Toast.LENGTH_LONG).show();
         } else {
             registerOnDemand(email_input,password_input,username_input);
@@ -70,6 +71,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
 // possible discard TextUtils.isEmpty(email_input)||TextUtils.isEmpty(password_input)
     }
 
+    // for register function
     private void registerOnDemand(String email_input, String password_input, String username_input) {
         authInLogReg.createUserWithEmailAndPassword(email_input,password_input).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -84,7 +86,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful())
-                                Toast.makeText(LoginRegisterHomeActivity.this, "Registered and Profile Updated Successfully, You can now Login", Toast.LENGTH_LONG).show();
+                                Toast.makeText(LoginRegisterHomeActivity.this, "Registered and Profile Updated Successfully, You can now Login", Toast.LENGTH_SHORT).show();
                         }
                     });
                     Log.i("创建账户信息：","昵称："+authInLogReg.getCurrentUser().getDisplayName());
@@ -97,10 +99,10 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
 
     }
 
+    // for login info verification
     public void loginEntry(View view) {
-        //login logic here
-        String email_input=emailField.getText().toString();
-        String password_input=passwordField.getText().toString();
+        String email_input=emailField.getText().toString().replaceAll("\\s","");
+        String password_input=passwordField.getText().toString().replaceAll("\\s","");
         if (email_input.isEmpty()||password_input.isEmpty()) {
             Toast.makeText(LoginRegisterHomeActivity.this, "Empty email or password", Toast.LENGTH_LONG).show();
         }else {
@@ -108,11 +110,12 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         }
     }
 
+    // for login function
     private void loginOnDemand(String email_input, String password_input) {
         authInLogReg.signInWithEmailAndPassword(email_input,password_input).addOnSuccessListener(this, new OnSuccessListener<AuthResult>() {
             @Override
             public void onSuccess(AuthResult authResult) {
-                Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Logged-in", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginRegisterHomeActivity.this, "Successfully Logged-in", Toast.LENGTH_SHORT).show();
                 startActivity(new Intent(LoginRegisterHomeActivity.this,MainActivity.class));
                 finish();
             }
@@ -124,9 +127,8 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         });
     }
 
+    // for password reset info collection
     public void resetPasswordEntry(View view) {
-
-
         AlertDialog.Builder resetDial = new AlertDialog.Builder(view.getContext());
         resetDial.setTitle("Forget Your Password?");
         resetDial.setMessage("Reset Via Your Email: ");
@@ -144,7 +146,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String resetEmail= emailForResetPassword.getText().toString();
                 if (resetEmail.isEmpty()) {
-                    Toast.makeText(LoginRegisterHomeActivity.this, "Please Enter Valid Email", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginRegisterHomeActivity.this, "Please Enter Valid Email", Toast.LENGTH_SHORT).show();
                 }else{
                     resetPassword(resetEmail);
                 }
@@ -155,6 +157,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
 
     }
 
+    // for password reset function
     private void resetPassword(String resetEmail) {
         authInLogReg.sendPasswordResetEmail(resetEmail).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
@@ -164,7 +167,7 @@ public class LoginRegisterHomeActivity extends AppCompatActivity {
         }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(LoginRegisterHomeActivity.this, "Something goes wrong sending reset email", Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginRegisterHomeActivity.this, "Something goes wrong sending reset email", Toast.LENGTH_SHORT).show();
             }
         });
     }
