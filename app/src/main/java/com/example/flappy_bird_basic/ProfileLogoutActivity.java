@@ -76,7 +76,7 @@ public class    ProfileLogoutActivity extends AppCompatActivity {
 
             //zpy update score part
             String thisuid = user.getUid();
-            Log.i("我的ID：", thisuid);
+
             
             DatabaseCRUD.getUserBestScore(thisuid).addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
@@ -86,8 +86,6 @@ public class    ProfileLogoutActivity extends AppCompatActivity {
                     userScoreText.setText(String.valueOf(scoreData.getValue()));
                 }
             });
-//            userScoreText.setText(String.valueOf(2222));
-//            userScoreText.setText(String.valueOf(thisScore));
 
         }
     }
