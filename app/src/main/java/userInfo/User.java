@@ -17,7 +17,7 @@ public class User implements Serializable {
         this.location = location;
         this.photoPath = photoPath;
         if(uName!=null) this.uName = uName;
-        else this.uName = "Default Name";
+        else this.uName = "Default";
     }
 
     public String getuName() {
