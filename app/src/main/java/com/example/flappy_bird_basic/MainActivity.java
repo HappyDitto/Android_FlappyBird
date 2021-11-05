@@ -52,6 +52,7 @@ public class MainActivity extends Activity implements SensorEventListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //firebase authentication setup
         authInMain=FirebaseAuth.getInstance();
         LoginRegisterHomeActivity.setUpAuth(authInMain);
         ProfileLogoutActivity.setUpAuth(authInMain);
@@ -70,7 +71,7 @@ public class MainActivity extends Activity implements SensorEventListener {
     }
 
     /***
-     * Implementation for light sensors
+     * Light Sensor implementation section
      */
 
     @Override
@@ -105,10 +106,8 @@ public class MainActivity extends Activity implements SensorEventListener {
      */
 
     public void goStart(View view){
-//        Intent intent = new Intent(this, StartGame.class);
         Intent intent = new Intent(this, StartPlayWithAI.class);
         intent.putExtra("Mode", StartPlayWithAI.SOLO_MODE);
-//        Intent intent = new Intent(this, StartTrain.class);
         startActivity(intent);
     }
 
@@ -126,7 +125,6 @@ public class MainActivity extends Activity implements SensorEventListener {
         // Write a message to the database
         DatabaseReference myRef = getFirebaseRef();
 
-        //监听到数据库有变化取出来打印
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -142,9 +140,8 @@ public class MainActivity extends Activity implements SensorEventListener {
 
     }
 
-    //possible discard of button
+    //must set to invisible if logged-in
     public void accountLoginRegister(View view) {
-//        ((Button)findViewById(R.id.goLoginBtn)).setEnabled(false);
         Intent intentForLoginRegister= new Intent(this,LoginRegisterHomeActivity.class);
         startActivity(intentForLoginRegister);
 
@@ -154,22 +151,29 @@ public class MainActivity extends Activity implements SensorEventListener {
     public void onStart() {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
+        authStateLog();
+    }
+
+    private void authStateLog() {
         FirebaseUser currUser= authInMain.getCurrentUser();
         if(currUser != null){
             ((Button) findViewById(R.id.goLoginBtn)).setEnabled(false);
             ((Button) findViewById(R.id.goLoginBtn)).setVisibility(View.GONE);
+        }else {
+            ((Button) findViewById(R.id.goLoginBtn)).setEnabled(true);
+            ((Button) findViewById(R.id.goLoginBtn)).setVisibility(View.VISIBLE);
         }
     }
 
 
-    // change to graphical account entry
+    //graphical account entry after logged-in
     public void userAccountEntry(View view) {
         //need logic for login register and user profile
         FirebaseUser currUser= authInMain.getCurrentUser();
         if (currUser!=null) {
             startActivity(new Intent(MainActivity.this,ProfileLogoutActivity.class));
         }else {
-            Toast.makeText(MainActivity.this, "Login to check your profile", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, "Login to check your profile", Toast.LENGTH_LONG).show();
         }
     }
 

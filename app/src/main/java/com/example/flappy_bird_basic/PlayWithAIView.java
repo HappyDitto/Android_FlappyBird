@@ -161,20 +161,22 @@ public class PlayWithAIView extends View {
         // draw the background on canvas
         canvas.drawBitmap(background,null, rect, null);
 
-        // this is where background changes
-        if(player.getScore() - preScore > 10){
+        /***
+         * Background changing mechanism
+         */
+        if(player.getScore() - preScore > 5){
             canvas.drawBitmap(background_night,null, rect, null);
         }
-        if(player.getScore() - preScore > 20){
+        if(player.getScore() - preScore > 10){
             canvas.drawBitmap(background_day,null, rect, null);
         }
-        if(player.getScore() - preScore > 30){
+        if(player.getScore() - preScore > 15){
             canvas.drawBitmap(background_magic,null, rect, null);
         }
-        if(player.getScore() - preScore > 40){
+        if(player.getScore() - preScore > 20){
             canvas.drawBitmap(background_temple,null, rect, null);
         }
-        if (player.getScore() - preScore > 50){
+        if (player.getScore() - preScore > 25){
             preScore = player.getScore();
         }
 
