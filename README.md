@@ -39,6 +39,8 @@
 
 - login system
 - register system
+- password reset
+- profile update and logout
 
 
 

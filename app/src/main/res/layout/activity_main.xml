@@ -49,6 +49,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="7dp"
         android:layout_marginTop="10dp"
+        android:background="@drawable/bird0_1"
         android:onClick="userAccountEntry"
         tools:src="@tools:sample/avatars" />
 
