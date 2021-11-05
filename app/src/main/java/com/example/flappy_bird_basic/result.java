@@ -51,12 +51,16 @@ public class result extends AppCompatActivity {
         switch(rank) {
             case 1:
                 medal.setImageDrawable(getDrawable(R.drawable.medals_0));
+                break;
             case 2:
                 medal.setImageDrawable(getDrawable(R.drawable.medals_1));
+                break;
             case 3:
                 medal.setImageDrawable(getDrawable(R.drawable.medals_2));
+                break;
             case 4:
                 medal.setImageDrawable(getDrawable(R.drawable.medals_3));
+                break;
         }
 
         button = (ImageButton) findViewById(R.id.startbutton);
